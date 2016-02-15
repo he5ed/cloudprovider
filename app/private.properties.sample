@@ -1,0 +1,24 @@
+## This properties file is used to store all sensitive information.
+#
+# This file must *NOT* be checked into Version Control Systems,
+# as it contains information that must not be shared in public.
+#
+# To use this file rename it to private.properties
+
+# Box cloud service properties
+box.client.id=
+box.client.secret=
+box.redirect=
+# Dropbox cloud service properties
+dropbox.client.id=
+dropbox.client.secret=
+dropbox.redirect=
+# Microsoft OneDrive cloud service properties
+onedrive.client.id=
+onedrive.client.secret=
+onedrive.redirect=
+# Amazon CloudDrive cloud service properties
+clouddrive.client.id=
+clouddrive.client.secret=
+clouddrive.redirect=
+# Additional cloud services' properties to be put here

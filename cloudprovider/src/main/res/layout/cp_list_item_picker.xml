@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2015 HE5ED.com
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:background="?selectableItemBackground">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/icon_image_view"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_folder_black_24dp"
+        android:tint="@color/material_grey_600"
+        android:maxHeight="48dp"
+        android:maxWidth="48dp"
+        android:scaleType="center"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/info_image_button"
+        android:layout_marginLeft="16dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_info_outline_black_24dp"
+        android:tint="@color/material_grey_600"
+        android:maxHeight="48dp"
+        android:maxWidth="48dp"
+        android:scaleType="center"
+        android:background="@drawable/abc_btn_borderless_material"
+        android:layout_alignParentRight="true"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Two-line item"
+            android:id="@+id/primary_text_view"
+            android:textSize="16sp"
+            android:ellipsize="middle"
+            android:paddingLeft="72dp"
+            android:paddingRight="48dp"
+            android:singleLine="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Secondary text"
+            android:id="@+id/secondary_text_view"
+            android:textSize="14sp"
+            android:paddingLeft="72dp"
+            android:paddingRight="48dp"
+            android:singleLine="true"/>
+    </LinearLayout>
+
+</RelativeLayout>

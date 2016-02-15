@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Cloud Provider</string>
+    <string name="title_activity_api">API Test</string>
+
+    <string name="action_remove_all">Remove All</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_pick_file">Pick file</string>
+    <string name="action_pick_folder">Pick folder</string>
+
+</resources>

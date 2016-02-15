@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Cloud Provider</string>
+
+    <!-- OAuth2Activity -->
+    <string name="dialog_message_auth_error">Authorization fail!</string>
+    <string name="auth_error_access_token_fail">Fail to get access token!</string>
+    <string name="auth_error_malformed_url">No url or malformed url for request!</string>
+    <string name="auth_error_user_info_fail">Fail to get user information!</string>
+
+    <!-- CloudPickerActivity -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_view_header_title">Open from</string>
+
+    <string name="action_search">Search</string>
+    <string name="action_sort">Sort</string>
+    <string name="action_view">Grid View</string>
+    <string name="action_refresh">Refresh</string>
+
+    <string name="home_folder_title">Home</string>
+    <string name="folder_empty_title">No item</string>
+    <string name="folder_empty_detail">This folder is empty</string>
+    <string name="error_empty_title">Error occurs</string>
+    <string name="select_folder_title">Select folder: %1$s</string>
+    <string name="select_folder_action">Select</string>
+    <string name="hint_search_folder">Search folder</string>
+    <string name="search_empty_title">No result found</string>
+    <string name="search_empty_detail">Change the keyword and try again</string>
+
+    <!-- ItemFragment -->
+    <string name="header_image_desc">Toolbar header image</string>
+    <string name="item_type_label">Type</string>
+    <string name="item_path_label">Path</string>
+    <string name="item_created_label">Created</string>
+    <string name="item_modified_label">Modified</string>
+    <string name="type_file">File</string>
+    <string name="type_folder">Folder</string>
+
+    <!-- AddAccountDialogFragment -->
+    <string name="account_dialog_title">Select cloud account</string>
+
+</resources>

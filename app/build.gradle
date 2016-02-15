@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
+
+    defaultConfig {
+        applicationId "com.he5ed.app.cloudprovider"
+        minSdkVersion 10
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        // API configuration
+        Properties properties = new Properties()
+        properties.load(project.file('private.properties').newDataInputStream())
+        // Box configuration
+        buildConfigField "String", "BOX_CLIENT_ID", (properties.containsKey('box.client.id') ?
+                "\"" + properties.getProperty('box.client.id') + "\"" : "null")
+        buildConfigField "String", "BOX_CLIENT_SECRET", (properties.containsKey('box.client.secret') ?
+                "\"" + properties.getProperty('box.client.secret') + "\"" : "null")
+        buildConfigField "String", "BOX_REDIRECT_URL", (properties.containsKey('box.redirect') ?
+                "\"" + properties.getProperty('box.redirect') + "\"" : "null")
+        // DropboxApi configuration
+        buildConfigField "String", "DROPBOX_CLIENT_ID", (properties.containsKey('dropbox.client.id') ?
+                "\"" + properties.getProperty('dropbox.client.id') + "\"" : "null")
+        buildConfigField "String", "DROPBOX_CLIENT_SECRET", (properties.containsKey('dropbox.client.secret') ?
+                "\"" + properties.getProperty('dropbox.client.secret') + "\"" : "null")
+        buildConfigField "String", "DROPBOX_REDIRECT_URL", (properties.containsKey('dropbox.redirect') ?
+                "\"" + properties.getProperty('dropbox.redirect') + "\"" : "null")
+        // OneDriveApi configuration
+        buildConfigField "String", "ONECLOUD_CLIENT_ID", (properties.containsKey('onedrive.client.id') ?
+                "\"" + properties.getProperty('onedrive.client.id') + "\"" : "null")
+        buildConfigField "String", "ONECLOUD_CLIENT_SECRET", (properties.containsKey('onedrive.client.secret') ?
+                "\"" + properties.getProperty('onedrive.client.secret') + "\"" : "null")
+        buildConfigField "String", "ONECLOUD_REDIRECT_URL", (properties.containsKey('onedrive.redirect') ?
+                "\"" + properties.getProperty('onedrive.redirect') + "\"" : "null")
+        // Amazon CloudDriveApi configuration
+        buildConfigField "String", "CLOUDDRIVE_CLIENT_ID", (properties.containsKey('clouddrive.client.id') ?
+                "\"" + properties.getProperty('clouddrive.client.id') + "\"" : "null")
+        buildConfigField "String", "CLOUDDRIVE_CLIENT_SECRET", (properties.containsKey('clouddrive.client.secret') ?
+                "\"" + properties.getProperty('clouddrive.client.secret') + "\"" : "null")
+        buildConfigField "String", "CLOUDDRIVE_REDIRECT_URL", (properties.containsKey('clouddrive.redirect') ?
+                "\"" + properties.getProperty('clouddrive.redirect') + "\"" : "null")
+        // MediaFireApi configuration
+        buildConfigField "String", "MEDIAFIRE_CLIENT_ID", (properties.containsKey('mediafire.client.id') ?
+                "\"" + properties.getProperty('mediafire.client.id') + "\"" : "null")
+        buildConfigField "String", "MEDIAFIRE_CLIENT_SECRET", (properties.containsKey('mediafire.client.secret') ?
+                "\"" + properties.getProperty('mediafire.client.secret') + "\"" : "null")
+        buildConfigField "String", "MEDIAFIRE_REDIRECT_URL", (properties.containsKey('mediafire.redirect') ?
+                "\"" + properties.getProperty('mediafire.redirect') + "\"" : "null")
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+    compile project(':cloudprovider')
+
+    // Dependencies for local unit tests
+    testCompile "junit:junit:$rootProject.ext.junitVersion"
+    testCompile "org.mockito:mockito-all:$rootProject.ext.mockitoVersion"
+    testCompile "org.hamcrest:hamcrest-all:$rootProject.ext.hamcrestVersion"
+    testCompile "org.powermock:powermock-module-junit4:$rootProject.ext.powerMockito"
+    testCompile "org.powermock:powermock-api-mockito:$rootProject.ext.powerMockito"
+}
