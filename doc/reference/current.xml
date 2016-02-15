@@ -1,0 +1,1644 @@
+<api>
+<package name="com.he5ed.lib.cloudprovider"
+>
+<class name="CloudProvider"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="addAccount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="cloudApiName" type="java.lang.String">
+</parameter>
+<parameter name="activity" type="android.app.Activity">
+</parameter>
+</method>
+<method name="addApi"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="clazz" type="java.lang.Class&lt;?&gt;">
+</parameter>
+<exception name="IllegalArgumentException" type="java.lang.IllegalArgumentException">
+</exception>
+</method>
+<method name="buildApi"
+ return="com.he5ed.lib.cloudprovider.apis.BaseApi"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="account" type="com.he5ed.lib.cloudprovider.models.CloudAccount">
+</parameter>
+<exception name="ExceptionInInitializerError" type="java.lang.ExceptionInInitializerError">
+</exception>
+</method>
+<method name="getAccountById"
+ return="com.he5ed.lib.cloudprovider.models.CloudAccount"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="id" type="java.lang.String">
+</parameter>
+</method>
+<method name="getApiList"
+ return="java.util.List&lt;java.lang.Class&lt;?&gt;&gt;"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getCloudAccounts"
+ return="com.he5ed.lib.cloudprovider.models.CloudAccount[]"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getInstance"
+ return="com.he5ed.lib.cloudprovider.CloudProvider"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="context" type="android.content.Context">
+</parameter>
+</method>
+<method name="getUserData"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="account" type="android.accounts.Account">
+</parameter>
+<parameter name="key" type="java.lang.String">
+</parameter>
+</method>
+<method name="removeAccount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="account" type="android.accounts.Account">
+</parameter>
+</method>
+<method name="removeAccountChangeListener"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="listener" type="com.he5ed.lib.cloudprovider.CloudProvider.OnAccountChangeListener">
+</parameter>
+</method>
+<method name="removeAllAccount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setAccountChangeListener"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="listener" type="com.he5ed.lib.cloudprovider.CloudProvider.OnAccountChangeListener">
+</parameter>
+</method>
+<method name="updateAccount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="account" type="android.accounts.Account">
+</parameter>
+<parameter name="data" type="java.util.Map&lt;java.lang.String, java.lang.String&gt;">
+</parameter>
+</method>
+<field name="ACCOUNT_TYPE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="AUTH_TYPE"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;full_access&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="CACHE_DIR"
+ type="java.io.File"
+ transient="false"
+ volatile="false"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="KEY_API_CLASS_NAME"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;apiClassName&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<interface name="CloudProvider.OnAccountChangeListener"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="onAccountAdded"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="account" type="com.he5ed.lib.cloudprovider.models.CloudAccount">
+</parameter>
+</method>
+<method name="onAccountRemoved"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="account" type="com.he5ed.lib.cloudprovider.models.CloudAccount">
+</parameter>
+</method>
+</interface>
+</package>
+<package name="com.he5ed.lib.cloudprovider.apis"
+>
+<class name="BaseApi"
+ extends="java.lang.Object"
+ abstract="true"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="BaseApi"
+ type="com.he5ed.lib.cloudprovider.apis.BaseApi"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="createFolder"
+ return="com.he5ed.lib.cloudprovider.models.CFolder"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+<parameter name="parent" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="deleteFile"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="file" type="com.he5ed.lib.cloudprovider.models.CFile">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="deleteFolder"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="downloadFile"
+ return="java.io.File"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="file" type="com.he5ed.lib.cloudprovider.models.CFile">
+</parameter>
+<parameter name="filename" type="java.lang.String">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="exploreFolder"
+ return="java.util.List&lt;java.lang.Object&gt;"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<parameter name="offset" type="int">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="getFileInfo"
+ return="com.he5ed.lib.cloudprovider.models.CFile"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="fileId" type="java.lang.String">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="getFolderInfo"
+ return="com.he5ed.lib.cloudprovider.models.CFolder"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="folderId" type="java.lang.String">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="getRoot"
+ return="com.he5ed.lib.cloudprovider.models.CFolder"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getThumbnail"
+ return="java.io.File"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="file" type="com.he5ed.lib.cloudprovider.models.CFile">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="logout"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="callback" type="Callback">
+</parameter>
+</method>
+<method name="moveFile"
+ return="com.he5ed.lib.cloudprovider.models.CFile"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="file" type="com.he5ed.lib.cloudprovider.models.CFile">
+</parameter>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="moveFolder"
+ return="com.he5ed.lib.cloudprovider.models.CFolder"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<parameter name="parent" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="prepareApi"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="prepareListener" type="com.he5ed.lib.cloudprovider.apis.BaseApi.OnPrepareListener">
+</parameter>
+</method>
+<method name="renameFile"
+ return="com.he5ed.lib.cloudprovider.models.CFile"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="file" type="com.he5ed.lib.cloudprovider.models.CFile">
+</parameter>
+<parameter name="name" type="java.lang.String">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="renameFolder"
+ return="com.he5ed.lib.cloudprovider.models.CFolder"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<parameter name="name" type="java.lang.String">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="search"
+ return="java.util.List&lt;java.lang.Object&gt;"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="keyword" type="java.lang.String">
+</parameter>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="searchFile"
+ return="java.util.List&lt;com.he5ed.lib.cloudprovider.models.CFile&gt;"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="keyword" type="java.lang.String">
+</parameter>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="searchFolder"
+ return="java.util.List&lt;com.he5ed.lib.cloudprovider.models.CFolder&gt;"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="keyword" type="java.lang.String">
+</parameter>
+<parameter name="folder" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="updateFile"
+ return="com.he5ed.lib.cloudprovider.models.CFile"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="file" type="com.he5ed.lib.cloudprovider.models.CFile">
+</parameter>
+<parameter name="content" type="java.io.File">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+<method name="uploadFile"
+ return="com.he5ed.lib.cloudprovider.models.CFile"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="file" type="java.io.File">
+</parameter>
+<parameter name="parent" type="com.he5ed.lib.cloudprovider.models.CFolder">
+</parameter>
+<exception name="RequestFailException" type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException">
+</exception>
+</method>
+</class>
+<interface name="BaseApi.OnPrepareListener"
+ abstract="true"
+ static="true"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<method name="onPrepareFail"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="e" type="java.lang.Exception">
+</parameter>
+</method>
+<method name="onPrepareSuccessful"
+ return="void"
+ abstract="true"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+</interface>
+</package>
+<package name="com.he5ed.lib.cloudprovider.exceptions"
+>
+<class name="AuthFailException"
+ extends="java.lang.Exception"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="AuthFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.AuthFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="AuthFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.AuthFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+</constructor>
+<constructor name="AuthFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.AuthFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+<constructor name="AuthFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.AuthFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+</class>
+<class name="ConflictException"
+ extends="java.lang.Exception"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="ConflictException"
+ type="com.he5ed.lib.cloudprovider.exceptions.ConflictException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="ConflictException"
+ type="com.he5ed.lib.cloudprovider.exceptions.ConflictException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+</constructor>
+<constructor name="ConflictException"
+ type="com.he5ed.lib.cloudprovider.exceptions.ConflictException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+<constructor name="ConflictException"
+ type="com.he5ed.lib.cloudprovider.exceptions.ConflictException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+</class>
+<class name="InvalidUrlException"
+ extends="java.lang.Exception"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="InvalidUrlException"
+ type="com.he5ed.lib.cloudprovider.exceptions.InvalidUrlException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="InvalidUrlException"
+ type="com.he5ed.lib.cloudprovider.exceptions.InvalidUrlException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+</constructor>
+<constructor name="InvalidUrlException"
+ type="com.he5ed.lib.cloudprovider.exceptions.InvalidUrlException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+<constructor name="InvalidUrlException"
+ type="com.he5ed.lib.cloudprovider.exceptions.InvalidUrlException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+</class>
+<class name="RequestFailException"
+ extends="java.lang.Exception"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="RequestFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<constructor name="RequestFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+</constructor>
+<constructor name="RequestFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+<constructor name="RequestFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="throwable" type="java.lang.Throwable">
+</parameter>
+</constructor>
+<constructor name="RequestFailException"
+ type="com.he5ed.lib.cloudprovider.exceptions.RequestFailException"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="detailMessage" type="java.lang.String">
+</parameter>
+<parameter name="code" type="int">
+</parameter>
+</constructor>
+<method name="getCode"
+ return="int"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setCode"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="code" type="int">
+</parameter>
+</method>
+</class>
+</package>
+<package name="com.he5ed.lib.cloudprovider.models"
+>
+<class name="CFile"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="android.os.Parcelable">
+</implements>
+<constructor name="CFile"
+ type="com.he5ed.lib.cloudprovider.models.CFile"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="map" type="java.util.Map&lt;java.lang.String, java.lang.Object&gt;">
+</parameter>
+</constructor>
+<method name="getCreated"
+ return="java.util.Date"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getId"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getModified"
+ return="java.util.Date"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getName"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getPath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSize"
+ return="long"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getType"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setCreated"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="created" type="java.util.Date">
+</parameter>
+</method>
+<method name="setId"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="id" type="java.lang.String">
+</parameter>
+</method>
+<method name="setModified"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="modified" type="java.util.Date">
+</parameter>
+</method>
+<method name="setName"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="setPath"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+</method>
+<method name="setSize"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="size" type="long">
+</parameter>
+</method>
+<method name="setType"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="type" type="java.lang.String">
+</parameter>
+</method>
+<field name="CREATED"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;created&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DATE_FORMAT"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;dateFormat&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ID"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;id&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="MODIFIED"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;modified&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="NAME"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;name&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="PATH"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;path&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="CFolder"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="android.os.Parcelable">
+</implements>
+<constructor name="CFolder"
+ type="com.he5ed.lib.cloudprovider.models.CFolder"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="map" type="java.util.Map&lt;java.lang.String, java.lang.Object&gt;">
+</parameter>
+</constructor>
+<method name="getCreated"
+ return="java.util.Date"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getId"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getModified"
+ return="java.util.Date"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getName"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getPath"
+ return="java.lang.String"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getSize"
+ return="long"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isNew"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isOffline"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="isRoot"
+ return="boolean"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setCreated"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="created" type="java.util.Date">
+</parameter>
+</method>
+<method name="setId"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="id" type="java.lang.String">
+</parameter>
+</method>
+<method name="setModified"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="modified" type="java.util.Date">
+</parameter>
+</method>
+<method name="setName"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="name" type="java.lang.String">
+</parameter>
+</method>
+<method name="setNew"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="aNew" type="boolean">
+</parameter>
+</method>
+<method name="setOffline"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="offline" type="boolean">
+</parameter>
+</method>
+<method name="setPath"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="path" type="java.lang.String">
+</parameter>
+</method>
+<method name="setRoot"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="root" type="boolean">
+</parameter>
+</method>
+<method name="setSize"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="size" type="long">
+</parameter>
+</method>
+<field name="CREATED"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;created&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="DATE_FORMAT"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;dateFormat&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="ID"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;id&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="MODIFIED"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;modified&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="NAME"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;name&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="PATH"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;path&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="CloudAccount"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="CloudAccount"
+ type="com.he5ed.lib.cloudprovider.models.CloudAccount"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<method name="getAccount"
+ return="android.accounts.Account"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="getUser"
+ return="com.he5ed.lib.cloudprovider.models.User"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</method>
+<method name="setAccount"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="account" type="android.accounts.Account">
+</parameter>
+</method>
+<method name="setUser"
+ return="void"
+ abstract="false"
+ native="false"
+ synchronized="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<parameter name="user" type="com.he5ed.lib.cloudprovider.models.User">
+</parameter>
+</method>
+<field name="api"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="id"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="type"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+<class name="User"
+ extends="java.lang.Object"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<constructor name="User"
+ type="com.he5ed.lib.cloudprovider.models.User"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<field name="avatarUrl"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="displayName"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="email"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="id"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="name"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+</package>
+<package name="com.he5ed.lib.cloudprovider.picker"
+>
+<class name="CloudPickerActivity"
+ extends="AppCompatActivity"
+ abstract="false"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+<implements name="com.he5ed.lib.cloudprovider.apis.BaseApi.OnPrepareListener">
+</implements>
+<constructor name="CloudPickerActivity"
+ type="com.he5ed.lib.cloudprovider.picker.CloudPickerActivity"
+ static="false"
+ final="false"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</constructor>
+<field name="EXTRA_PICK_ACCOUNT_ID"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;com.he5ed.lib.cloudprovider.PICK_ACCOUNT&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_PICK_FOLDER"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;com.he5ed.lib.cloudprovider.PICK_FOLDER&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+<field name="EXTRA_PICK_RESULT"
+ type="java.lang.String"
+ transient="false"
+ volatile="false"
+ value="&quot;com.he5ed.lib.cloudprovider.PICK_RESULT&quot;"
+ static="true"
+ final="true"
+ deprecated="not deprecated"
+ visibility="public"
+>
+</field>
+</class>
+</package>
+</api>
