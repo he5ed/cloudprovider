@@ -21,7 +21,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -42,10 +41,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.he5ed.lib.cloudprovider.R;
+import com.he5ed.lib.cloudprovider.apis.ApiCallback;
 import com.he5ed.lib.cloudprovider.apis.BaseApi;
 import com.he5ed.lib.cloudprovider.exceptions.RequestFailException;
 import com.he5ed.lib.cloudprovider.models.CFile;
 import com.he5ed.lib.cloudprovider.models.CFolder;
+import com.squareup.okhttp.Request;
 
 import java.util.List;
 
@@ -269,36 +270,23 @@ public class PickerFragment extends Fragment
      */
     public void exploreFolder(CFolder folder) {
         mFolder = folder;
-        // must run on other thread
-        new AsyncTask<String, Void, List>() {
 
-            String error;
-
+        mApi.exploreFolderAsync(mFolder, 0, new ApiCallback() {
             @Override
-            protected List doInBackground(String... params) {
-                try {
-                    return mApi.exploreFolder(mFolder, 0);
-                } catch (RequestFailException e) {
-                    e.printStackTrace();
-                    error = e.getMessage();
-                    Log.e(CloudPickerActivity.TAG, e.getMessage());
-                }
-
-                return null;
+            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                Log.e(CloudPickerActivity.TAG, exception.getMessage());
             }
 
             @Override
-            protected void onPostExecute(List list) {
-                mAdapter.setItemList(list);
-                if (error != null) {
-                    // error occur print the error message
-                    updateEmptyView(CAUSE_ERROR, error);
-                } else {
+            public void onUiReceiveItems(Request request, List items) {
+                if (items == null || items.size() < 1) {
                     // it is just an empty folder
                     updateEmptyView(CAUSE_EMPTY, null);
+                } else {
+                    mAdapter.setItemList(items);
                 }
             }
-        }.execute();
+        });
     }
 
     /**
@@ -307,36 +295,23 @@ public class PickerFragment extends Fragment
      * @param keyword to search for
      */
     public void search(String keyword) {
-        // must run on other thread
-        new AsyncTask<String, Void, List>() {
-
-            String error;
-
+        mApi.searchAsync(keyword, mFolder, new ApiCallback() {
             @Override
-            protected List doInBackground(String... params) {
-                try {
-                    return mApi.search(params[0], mFolder);
-                } catch (RequestFailException e) {
-                    e.printStackTrace();
-                    error = e.getMessage();
-                    Log.e(CloudPickerActivity.TAG, e.getMessage());
-                }
-
-                return null;
+            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                // error occur print the error message
+                updateEmptyView(CAUSE_ERROR, exception.getMessage());
+                // update items list to null
+                mAdapter.setItemList(null);
             }
 
             @Override
-            protected void onPostExecute(List list) {
-                mAdapter.setItemList(list);
-                if (error != null) {
-                    // error occur print the error message
-                    updateEmptyView(CAUSE_ERROR, error);
-                } else {
-                    // no result found
-                    updateEmptyView(CAUSE_SEARCH, null);
-                }
+            public void onUiReceiveItems(Request request, List items) {
+                // no result found
+                updateEmptyView(CAUSE_SEARCH, null);
+                // update items list
+                mAdapter.setItemList(items);
             }
-        }.execute(keyword);
+        });
     }
 
     /**

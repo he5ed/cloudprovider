@@ -31,8 +31,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.he5ed.lib.cloudprovider.CloudProvider;
+import com.he5ed.lib.cloudprovider.apis.ApiCallback;
 import com.he5ed.lib.cloudprovider.apis.BaseApi;
 import com.he5ed.lib.cloudprovider.exceptions.RequestFailException;
 import com.he5ed.lib.cloudprovider.models.CFile;
@@ -47,13 +49,20 @@ import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareListener {
 
     public static final String TAG = "ApiActivity";
     public static final String EXTRA_ACCOUNT = "com.he5ed.app.cloudprovider.ACCOUNT";
+
+    /**
+     * Switch between async mode or UI blocking mode
+     */
+    private static final boolean ASYNC_MODE = true;
 
     private static final int REQUEST_UPLOAD_FILE = 1;
     private static final int REQUEST_DOWNLOAD_FILE = 2;
@@ -65,11 +74,14 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
     private static final int REQUEST_RENAME_FILE = 8;
     private static final int REQUEST_MOVE_FILE = 9;
     private static final int REQUEST_UPLOAD_PHOTO = 10;
+    private static final int REQUEST_SELECT_FOLDER = 11;
+    private static final int REQUEST_MOVE_FOLDER = 12;
 
     private BaseApi mApi;
     private CloudAccount mAccount;
     private EditText mNameInput;
     private CFile mSeletedFile;
+    private CFolder mSeletedFolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,6 +231,18 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
             }
         });
 
+        Button moveFolder = (Button) findViewById(R.id.move_folder_button);
+        moveFolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // pick folder
+                Intent folderIntent = new Intent(getBaseContext(), CloudPickerActivity.class);
+                folderIntent.putExtra(CloudPickerActivity.EXTRA_PICK_ACCOUNT_ID, mAccount.id);
+                folderIntent.putExtra(CloudPickerActivity.EXTRA_PICK_FOLDER, true);
+                startActivityForResult(folderIntent, REQUEST_SELECT_FOLDER);
+            }
+        });
+
         Button logout = (Button) findViewById(R.id.logout_button);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -249,39 +273,180 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
         switch (requestCode) {
             case REQUEST_UPLOAD_FILE:
                 final CFolder folder0 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
-                new UploadFileTask().execute(folder0);
+                if (ASYNC_MODE) {
+                    try {
+                        File file = new File(getFilesDir(), "Sample_Text_File.txt");
+                        if (!file.exists()) {
+                            if (file.createNewFile()) {
+                                FilesUtils.copyFile(getAssets().open("Sample_Text_File.txt"),
+                                        new FileOutputStream(file));
+                            }
+                        }
+                        mApi.uploadFileAsync(file, folder0, new ApiCallback() {
+                            @Override
+                            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                                showToast(exception.getMessage());
+                            }
+
+                            @Override
+                            public void onUiReceiveItems(Request request, List items) {
+                                if (items != null && items.size() > 0) {
+                                    CFile cFile = (CFile) items.get(0);
+                                    showToast("File " + cFile.getName() + " uploaded");
+                                }
+                            }
+                        });
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    new UploadFileTask().execute(folder0);
+                }
                 break;
             case REQUEST_DOWNLOAD_FILE:
                 CFile file2 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
-                new DownloadFileTask().execute(file2, null);
+                if (ASYNC_MODE) {
+                    mApi.downloadFileAsync(file2, null, new ApiCallback() {
+                        @Override
+                        public void onUiRequestFailure(Request request, RequestFailException exception) {
+                            showToast(exception.getMessage());
+                        }
+
+                        @Override
+                        public void onUiReceiveItems(Request request, List items) {
+                            if (items != null && items.size() > 0) {
+                                // download item return File type
+                                File file = (File) items.get(0);
+                                showToast("File " + file.getName() + " downloaded");
+                            }
+                        }
+                    });
+                } else {
+                    new DownloadFileTask().execute(file2, null);
+                }
                 break;
             case REQUEST_DELETE_FILE:
-                CFile file3 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
-                new DeleteFileTask().execute(file3);
+                final CFile file3 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
+                if (ASYNC_MODE) {
+                    mApi.deleteFileAsync(file3, new ApiCallback() {
+                        @Override
+                        public void onUiRequestFailure(Request request, RequestFailException exception) {
+                            showToast(exception.getMessage());
+                        }
+
+                        @Override
+                        public void onUiReceiveItems(Request request, List items) {
+                            showToast("File " + file3.getName() + " deleted");
+                        }
+                    });
+                } else {
+                    new DeleteFileTask().execute(file3);
+                }
                 break;
             case REQUEST_UPDATE_FILE:
                 CFile file4 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
-                new UpdateFileTask().execute(file4);
+                if (ASYNC_MODE) {
+                    try {
+                        File file = new File(getFilesDir(), "Updated_Text_File.txt");
+                        if (!file.exists()) {
+                            if (file.createNewFile()) {
+                                FilesUtils.copyFile(getAssets().open("Updated_Text_File.txt"),
+                                        new FileOutputStream(file));
+                            }
+                        }
+                        mApi.updateFileAsync(file4, file, new ApiCallback() {
+                            @Override
+                            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                                showToast(exception.getMessage());
+                            }
+
+                            @Override
+                            public void onUiReceiveItems(Request request, List items) {
+                                if (items != null && items.size() > 0) {
+                                    CFile cFile = (CFile) items.get(0);
+                                    showToast("File " + cFile.getName() + " updated");
+                                }
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    new UpdateFileTask().execute(file4);
+                }
                 break;
             case REQUEST_CREATE_FOLDER:
                 final CFolder folder1 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
                 showEnterName(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new CreateFolderTask().execute(mNameInput.getText().toString(), folder1);
+                        if (ASYNC_MODE) {
+                            mApi.createFolderAsync(mNameInput.getText().toString(), folder1,
+                                    new ApiCallback() {
+                                @Override
+                                public void onUiRequestFailure(Request request, RequestFailException exception) {
+                                    showToast(exception.getMessage());
+                                }
+
+                                @Override
+                                public void onUiReceiveItems(Request request, List items) {
+                                    if (items != null && items.size() > 0) {
+                                        CFolder folder = (CFolder) items.get(0);
+                                        showToast("Folder " + folder.getName() + " created");
+                                    }
+                                }
+                            });
+                        } else {
+                            new CreateFolderTask().execute(mNameInput.getText().toString(), folder1);
+                        }
                     }
                 });
                 break;
             case REQUEST_DELETE_FOLDER:
-                CFolder folder2 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
-                new DeleteFolderTask().execute(folder2);
+                final CFolder folder2 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
+                if (ASYNC_MODE) {
+                    mApi.deleteFolderAsync(folder2, new ApiCallback() {
+                        @Override
+                        public void onUiRequestFailure(Request request, RequestFailException exception) {
+                            showToast(exception.getMessage());
+                        }
+
+                        @Override
+                        public void onUiReceiveItems(Request request, List items) {
+                            showToast("Folder " + folder2.getName() + " deleted");
+                        }
+                    });
+                } else {
+                    new DeleteFolderTask().execute(folder2);
+                }
                 break;
             case REQUEST_RENAME_FOLDER:
                 final CFolder folder3 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
                 showEnterName(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new RenameFolderTask().execute(folder3, mNameInput.getText().toString());
+                        if (ASYNC_MODE) {
+                            mApi.renameFolderAsync(folder3, mNameInput.getText().toString(), new ApiCallback() {
+                                @Override
+                                public void onUiRequestFailure(Request request, RequestFailException exception) {
+                                    showToast(exception.getMessage());
+                                }
+
+                                @Override
+                                public void onUiReceiveItems(Request request, List items) {
+                                    if (items != null && items.size() > 0) {
+                                        CFolder folder = (CFolder) items.get(0);
+                                        showToast("Folder " + folder3.getName() +
+                                                " renamed to " + folder.getName());
+                                    }
+                                }
+                            });
+                        } else {
+                            new RenameFolderTask().execute(folder3, mNameInput.getText().toString());
+                        }
                     }
                 });
                 break;
@@ -290,12 +455,30 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
                 showEnterName(new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        new RenameFileTask().execute(file5, mNameInput.getText().toString());
+                        if (ASYNC_MODE) {
+                            mApi.renameFileAsync(file5, mNameInput.getText().toString(), new ApiCallback() {
+                                @Override
+                                public void onUiRequestFailure(Request request, RequestFailException exception) {
+                                    showToast(exception.getMessage());
+                                }
+
+                                @Override
+                                public void onUiReceiveItems(Request request, List items) {
+                                    if (items != null && items.size() > 0) {
+                                        CFile file = (CFile) items.get(0);
+                                        showToast("File " + file5.getName() +
+                                                " renamed to " + file.getName());
+                                    }
+                                }
+                            });
+                        } else {
+                            new RenameFileTask().execute(file5, mNameInput.getText().toString());
+                        }
                     }
                 });
                 break;
             case REQUEST_MOVE_FILE:
-                Parcelable result = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
+                final Parcelable result = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
                 if (result instanceof CFile) {
                     mSeletedFile = (CFile) result;
                     // pick folder
@@ -304,12 +487,88 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
                     fileIntent.putExtra(CloudPickerActivity.EXTRA_PICK_FOLDER, true);
                     startActivityForResult(fileIntent, REQUEST_MOVE_FILE);
                 } else if (result instanceof CFolder) {
-                    new MoveFileTask().execute(mSeletedFile, result);
+                    if (ASYNC_MODE) {
+                        mApi.moveFileAsync(mSeletedFile, (CFolder) result, new ApiCallback() {
+                            @Override
+                            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                                showToast(exception.getMessage());
+                            }
+
+                            @Override
+                            public void onUiReceiveItems(Request request, List items) {
+                                if (items != null && items.size() > 0) {
+                                    CFile file = (CFile) items.get(0);
+                                    showToast("File " + file.getName() +
+                                            " moved to " + ((CFolder) result).getName());
+                                }
+                            }
+                        });
+                    } else {
+                        new MoveFileTask().execute(mSeletedFile, result);
+                    }
                 }
                 break;
             case REQUEST_UPLOAD_PHOTO:
                 final CFolder folder6 = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
-                new UploadPhotoTask().execute(folder6);
+                if (ASYNC_MODE) {
+                    try {
+                        File file = new File(getFilesDir(), "Sample_Photo.jpg");
+                        if (!file.exists()) {
+                            if (file.createNewFile()) {
+                                FilesUtils.copyFile(getAssets().open("Sample_Photo.jpg"),
+                                        new FileOutputStream(file));
+                            }
+                        }
+                        mApi.uploadFileAsync(file, folder6, new ApiCallback() {
+                            @Override
+                            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                                showToast(exception.getMessage());
+                            }
+
+                            @Override
+                            public void onUiReceiveItems(Request request, List items) {
+                                if (items != null && items.size() > 0) {
+                                    CFile cFile = (CFile) items.get(0);
+                                    showToast("File " + cFile.getName() + " uploaded");
+                                }
+                            }
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    new UploadPhotoTask().execute(folder6);
+                }
+                break;
+            case REQUEST_SELECT_FOLDER:
+                mSeletedFolder = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
+                // move folder
+                Intent fileIntent = new Intent(getBaseContext(), CloudPickerActivity.class);
+                fileIntent.putExtra(CloudPickerActivity.EXTRA_PICK_ACCOUNT_ID, mAccount.id);
+                fileIntent.putExtra(CloudPickerActivity.EXTRA_PICK_FOLDER, true);
+                startActivityForResult(fileIntent, REQUEST_MOVE_FOLDER);
+                break;
+            case REQUEST_MOVE_FOLDER:
+                final CFolder parent = data.getParcelableExtra(CloudPickerActivity.EXTRA_PICK_RESULT);
+                if (ASYNC_MODE) {
+                    mApi.moveFolderAsync(mSeletedFolder, parent, new ApiCallback() {
+                        @Override
+                        public void onUiRequestFailure(Request request, RequestFailException exception) {
+                            showToast(exception.getMessage());
+                        }
+
+                        @Override
+                        public void onUiReceiveItems(Request request, List items) {
+                            if (items != null && items.size() > 0) {
+                                CFolder folder = (CFolder) items.get(0);
+                                showToast("Folder " + folder.getName() +
+                                        " moved to " + parent.getName());
+                            }
+                        }
+                    });
+                } else {
+                    new MoveFolderTask().execute(mSeletedFolder, parent);
+                }
                 break;
         }
     }
@@ -322,9 +581,11 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
         @Override
         protected Void doInBackground(Object... params) {
             try {
-                mApi.createFolder((String) params[0], (CFolder) params[1]);
+                CFolder folder = mApi.createFolder((String) params[0], (CFolder) params[1]);
+                showToast("Folder " + folder.getName() + " created");
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                showToast(e.getMessage());
             }
             return null;
         }
@@ -339,8 +600,10 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
         protected Void doInBackground(Object... params) {
             try {
                 mApi.deleteFolder((CFolder) params[0]);
+                showToast("Folder " + ((CFolder) params[0]).getName() + " deleted");
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                showToast(e.getMessage());
             }
             return null;
         }
@@ -440,9 +703,11 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
         @Override
         protected Void doInBackground(Object... params) {
             try {
-                mApi.renameFolder((CFolder) params[0], (String) params[1]);
+                CFolder folder = mApi.renameFolder((CFolder) params[0], (String) params[1]);
+                showToast("Folder " + ((CFolder) params[0]).getName() + " renamed to " + folder.getName());
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                showToast(e.getMessage());
             }
 
             return null;
@@ -509,6 +774,23 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
         }
     }
 
+    /**
+     * Move folder to the selected folder
+     */
+    private class MoveFolderTask extends AsyncTask<Object, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Object... params) {
+            try {
+                mApi.moveFolder((CFolder) params[0], (CFolder) params[1]);
+            } catch (RequestFailException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -522,6 +804,15 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
     @Override
     public void onPrepareFail(Exception e) {
         finish();
+    }
+
+    /**
+     * Inform use of the test result
+     *
+     * @param message to show the outcome of the test
+     */
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     /**

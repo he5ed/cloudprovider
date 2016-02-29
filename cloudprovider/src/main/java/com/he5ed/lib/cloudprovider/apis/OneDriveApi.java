@@ -211,7 +211,14 @@ public class OneDriveApi extends BaseApi {
         try {
             map.put(CFolder.ID, jsonObject.getString("id"));
             map.put(CFolder.NAME, jsonObject.getString("name"));
+            if (jsonObject.has("size"))
+                map.put(CFolder.SIZE, (long) jsonObject.getInt("size"));
+
+            if (jsonObject.has("parentReference"))
+                map.put(CFolder.PATH, jsonObject.getJSONObject("parentReference").getString("path"));
+
             map.put(CFolder.DATE_FORMAT, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
             if (jsonObject.has("createdDateTime"))
                 map.put(CFolder.CREATED, jsonObject.getString("createdDateTime"));
             if (jsonObject.has("lastModifiedDateTime"))
@@ -228,18 +235,25 @@ public class OneDriveApi extends BaseApi {
      * Build file from JSONObject
      *
      * @param jsonObject from http response
-     * @return CFolder
+     * @return CFile
      */
     public static CFile buildFile(JSONObject jsonObject) {
         Map<String, Object> map = new HashMap<>();
         try {
-            map.put(CFolder.ID, jsonObject.getString("id"));
-            map.put(CFolder.NAME, jsonObject.getString("name"));
-            map.put(CFolder.DATE_FORMAT, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            map.put(CFile.ID, jsonObject.getString("id"));
+            map.put(CFile.NAME, jsonObject.getString("name"));
+            if (jsonObject.has("size"))
+                map.put(CFile.SIZE, (long) jsonObject.getInt("size"));
+
+            if (jsonObject.has("parentReference"))
+                map.put(CFile.PATH, jsonObject.getJSONObject("parentReference").getString("path"));
+
+            map.put(CFile.DATE_FORMAT, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
             if (jsonObject.has("createdDateTime"))
-                map.put(CFolder.CREATED, jsonObject.getString("createdDateTime"));
+                map.put(CFile.CREATED, jsonObject.getString("createdDateTime"));
             if (jsonObject.has("lastModifiedDateTime"))
-                map.put(CFolder.MODIFIED, jsonObject.getString("lastModifiedDateTime"));
+                map.put(CFile.MODIFIED, jsonObject.getString("lastModifiedDateTime"));
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -427,8 +441,15 @@ public class OneDriveApi extends BaseApi {
 
         List<Object> list = new ArrayList<>();
 
+        Uri uri = Uri.parse(API_BASE_URL);
+        String url = uri.buildUpon()
+                .appendEncodedPath("drive/items/" + folder.getId() + "/children")
+                .appendQueryParameter("select", "id,name,file,folder,size,createdDateTime,lastModifiedDateTime,parentReference")
+                .build()
+                .toString();
+
         Request request = new Request.Builder()
-                .url(API_BASE_URL + "/drive/items/" + folder.getId() + "/children")
+                .url(url)
                 .header("Authorization", String.format("Bearer %s", mAccessToken))
                 .get()
                 .build();
@@ -1213,6 +1234,91 @@ public class OneDriveApi extends BaseApi {
             throw new RequestFailException(e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public void getFolderInfoAsync(@NonNull String folderId, IApiCallback callback) {
+
+    }
+
+    @Override
+    public void exploreFolderAsync(@NonNull CFolder folder, int offset, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void createFolderAsync(@NonNull String name, @Nullable CFolder parent, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void renameFolderAsync(@NonNull CFolder folder, String name, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void moveFolderAsync(@NonNull CFolder folder, @Nullable CFolder parent, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void deleteFolderAsync(@NonNull CFolder folder, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void getFileInfoAsync(@NonNull String fileId, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void uploadFileAsync(@NonNull File file, @Nullable CFolder parent, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void updateFileAsync(@NonNull CFile file, File content, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void renameFileAsync(@NonNull CFile file, String name, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void moveFileAsync(@NonNull CFile file, @Nullable CFolder folder, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void downloadFileAsync(@NonNull CFile file, @Nullable String filename, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void deleteFileAsync(@NonNull CFile file, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void searchFileAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void searchFolderAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void searchAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
+
+    }
+
+    @Override
+    public void getThumbnailAsync(@NonNull CFile file, ApiCallback callback) {
+
     }
 
     /**

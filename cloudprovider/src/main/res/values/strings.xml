@@ -31,6 +31,7 @@
     <string name="header_image_desc">Toolbar header image</string>
     <string name="item_type_label">Type</string>
     <string name="item_path_label">Path</string>
+    <string name="item_size_label">Size</string>
     <string name="item_created_label">Created</string>
     <string name="item_modified_label">Modified</string>
     <string name="type_file">File</string>

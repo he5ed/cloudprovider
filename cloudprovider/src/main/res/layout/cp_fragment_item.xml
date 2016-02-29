@@ -58,6 +58,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="16dp"
+                    android:text="@string/item_size_label"/>
+                <TextView
+                    android:id="@+id/size_text_view"
+                    android:layout_marginRight="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </TableRow>
+            <TableRow android:paddingBottom="8dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="16dp"
                     android:text="@string/item_created_label"/>
                 <TextView
                     android:id="@+id/created_text_view"

@@ -23,6 +23,7 @@ import android.text.TextUtils;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -37,14 +38,19 @@ public class CFile implements Parcelable, Comparable {
     public static final String ID = "id";
 
     /**
-     * Map key for cloud file name. File name include extension.
+     * Map key for cloud file name. File name include extension
      */
     public static final String NAME = "name";
 
     /**
-     * Map key for cloud file path in reference to the cloud storage root directory.
+     * Map key for cloud file path in reference to the cloud storage root directory
      */
     public static final String PATH = "path";
+
+    /**
+     * Map key for cloud file size in bytes as long
+     */
+    public static final String SIZE = "size";
 
     /**
      * Map key for the date format that the cloud server is using. Refer to the cloud service
@@ -60,7 +66,7 @@ public class CFile implements Parcelable, Comparable {
     public static final String CREATED = "created";
 
     /**
-     * Map key for the date this cloud file is last modified.
+     * Map key for the date this cloud file is last modified
      */
     public static final String MODIFIED = "modified";
 
@@ -83,19 +89,25 @@ public class CFile implements Parcelable, Comparable {
         // create empty CFile object
         if (map == null)
             return;
+        // check for each item availability
+        if (map.containsKey(ID)) mId = (String) map.get(ID);
+        if (map.containsKey(NAME)) mName = (String) map.get(NAME);
+        if (map.containsKey(PATH)) mPath = (String) map.get(PATH);
+        if (map.containsKey(SIZE)) mSize = (long) map.get(SIZE);
 
         try {
-            mId = (String) map.get(ID);
-            mName = (String) map.get(NAME);
-            mPath = (String) map.get(PATH);
             // format date
-            SimpleDateFormat df = new SimpleDateFormat((String) map.get(DATE_FORMAT));
-            String created = (String) map.get(CREATED);
-            String modified = (String) map.get(MODIFIED);
-            if (!TextUtils.isEmpty(created))
-                mCreated = df.parse(created);
-            if (!TextUtils.isEmpty(modified))
-                mModified = df.parse(modified);
+            SimpleDateFormat df = new SimpleDateFormat((String) map.get(DATE_FORMAT), Locale.getDefault());
+            if (map.containsKey(CREATED)) {
+                String created = (String) map.get(CREATED);
+                if (!TextUtils.isEmpty(created))
+                    mCreated = df.parse(created);
+            }
+            if (map.containsKey(MODIFIED)){
+                String modified = (String) map.get(MODIFIED);
+                if (!TextUtils.isEmpty(modified))
+                    mModified = df.parse(modified);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
             mCreated = mModified = new Date();

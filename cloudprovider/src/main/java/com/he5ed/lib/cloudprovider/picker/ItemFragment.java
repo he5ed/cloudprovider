@@ -19,7 +19,6 @@ package com.he5ed.lib.cloudprovider.picker;
 
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -32,14 +31,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.he5ed.lib.cloudprovider.R;
+import com.he5ed.lib.cloudprovider.apis.ApiCallback;
 import com.he5ed.lib.cloudprovider.apis.BaseApi;
 import com.he5ed.lib.cloudprovider.exceptions.RequestFailException;
 import com.he5ed.lib.cloudprovider.models.CFile;
 import com.he5ed.lib.cloudprovider.models.CFolder;
+import com.he5ed.lib.cloudprovider.utils.FilesUtils;
 import com.he5ed.lib.cloudprovider.utils.GraphicUtils;
+import com.squareup.okhttp.Request;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * This is the fragment that show the details information of a cloud file or folder,
@@ -107,7 +110,7 @@ public class ItemFragment extends Fragment {
 
     /**
      * Display file information
-     * @param item
+     * @param item as target can be either CFile or CFolder object
      */
     public void setItem(Object item) {
         mItem = item;
@@ -122,31 +125,45 @@ public class ItemFragment extends Fragment {
      */
     private void updateView(View rootView) {
 
-        ImageView headerImage = (ImageView) rootView.findViewById(R.id.header_image_view);
+        final ImageView headerImage = (ImageView) rootView.findViewById(R.id.header_image_view);
         TextView title = (TextView) rootView.findViewById(R.id.title_text_view);
         TextView type = (TextView) rootView.findViewById(R.id.type_text_view);
         TextView path = (TextView) rootView.findViewById(R.id.path_text_view);
+        TextView size = (TextView) rootView.findViewById(R.id.size_text_view);
         TextView created = (TextView) rootView.findViewById(R.id.created_text_view);
         TextView modified = (TextView) rootView.findViewById(R.id.modified_text_view);
         // setup simple date formatter
         SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
         if (mItem instanceof CFile) {
-            CFile file = (CFile) mItem;
+            final CFile file = (CFile) mItem;
             title.setText(file.getName());
             type.setText(R.string.type_file);
             path.setText(file.getPath());
+            size.setText(FilesUtils.getFileSize(file.getSize()));
             if (file.getCreated() != null) created.setText(sdf.format(file.getCreated()));
             if (file.getModified() != null) modified.setText(sdf.format(file.getModified()));
-            new GetThumbnailTask().execute(file);
+            //new GetThumbnailTask().execute(file);
             headerImage.setImageDrawable(GraphicUtils.setTint(getResources(),
                     R.drawable.ic_insert_drive_file_black_48dp,
                     Color.parseColor("#9E9E9E")));
+            mApi.getThumbnailAsync(file, new ApiCallback() {
+                @Override
+                public void onUiRequestFailure(Request request, RequestFailException exception) {
 
+                }
+
+                @Override
+                public void onUiReceiveItems(Request request, List items) {
+                    File bitmapFile = (File) items.get(0);
+                    headerImage.setImageDrawable(BitmapDrawable.createFromPath(bitmapFile.getPath()));
+                }
+            });
         } else if (mItem instanceof CFolder) {
             CFolder folder = (CFolder) mItem;
             title.setText(folder.getName());
             type.setText(R.string.type_file);
             path.setText(folder.getPath());
+            size.setText(FilesUtils.getFileSize(folder.getSize()));
             if (folder.getCreated() != null) created.setText(sdf.format(folder.getCreated()));
             if (folder.getModified() != null) modified.setText(sdf.format(folder.getModified()));
 
@@ -158,30 +175,4 @@ public class ItemFragment extends Fragment {
         AppBarLayout appbar = (AppBarLayout) rootView.findViewById(R.id.app_bar);
         appbar.setExpanded(true);
     }
-
-    /**
-     * Async task to retrieve thumbnail image for file
-     */
-    private class GetThumbnailTask extends AsyncTask<Object, Void, File> {
-
-        @Override
-        protected File doInBackground(Object... params) {
-            try {
-                return mApi.getThumbnail((CFile) params[0]);
-            } catch (RequestFailException e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(File file) {
-            if (file != null) {
-                ImageView headerImage = (ImageView) getView().findViewById(R.id.header_image_view);
-                headerImage.setImageDrawable(BitmapDrawable.createFromPath(file.getPath()));
-            }
-        }
-    }
-
 }

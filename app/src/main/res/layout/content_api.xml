@@ -82,6 +82,13 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Move Folder"
+                android:id="@+id/move_folder_button"
+                android:layout_gravity="center_horizontal"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Upload File"
                 android:id="@+id/upload_file_button"/>
 

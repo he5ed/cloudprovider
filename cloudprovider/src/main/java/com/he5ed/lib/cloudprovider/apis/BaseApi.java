@@ -99,6 +99,160 @@ public abstract class BaseApi {
     public abstract CFolder getRoot();
 
     /**
+     *  Async get file information from id
+     *
+     * @param folderId to retrieve the folder details
+     * @param callback to return the request result back
+     */
+    public abstract void getFolderInfoAsync(@NonNull String folderId, IApiCallback callback);
+
+    /**
+     * Async get folder items
+     *
+     * @param folder to explore
+     * @param callback to return the request result back
+     */
+    public abstract void exploreFolderAsync(@NonNull CFolder folder, int offset, ApiCallback callback);
+
+    /**
+     * Async create folder
+     *
+     * @param name of the new folder
+     * @param parent folder that the new folder will reside, use null for root folder
+     * @param callback to return the request result back
+     */
+    public abstract void createFolderAsync(@NonNull String name, @Nullable CFolder parent, ApiCallback callback);
+
+    /**
+     * Async rename folder
+     *
+     * @param folder to be renamed
+     * @param name for the folder
+     * @param callback to return the request result back
+     */
+    public abstract void renameFolderAsync(@NonNull CFolder folder, String name, ApiCallback callback);
+
+    /**
+     * Async move folder
+     *
+     * @param folder to be moved
+     * @param parent folder that will contain the folder, use null for root
+     * @param callback to return the request result back
+     */
+    public abstract void moveFolderAsync(@NonNull CFolder folder, @Nullable CFolder parent, ApiCallback callback);
+
+    /**
+     * Async delete folder
+     *
+     * @param folder to be deleted
+     * @param callback to return the request result back
+     */
+    public abstract void deleteFolderAsync(@NonNull CFolder folder, ApiCallback callback);
+
+    /**
+     * Async get file information from id
+     *
+     * @param fileId to retrieve the file details
+     * @param callback to return the request result back
+     */
+    public abstract void getFileInfoAsync(@NonNull String fileId, ApiCallback callback);
+
+    /**
+     * Async upload file
+     * If file with the same filename already exist an exception will be thrown
+     *
+     * @param file to upload
+     * @param parent folder that the uploaded file will reside, use null for root
+     * @param callback to return the request result back
+     */
+    public abstract void uploadFileAsync(@NonNull File file, @Nullable CFolder parent, ApiCallback callback);
+
+    /**
+     * Async update file
+     * If no matching file was found the file will be uploaded
+     *
+     * @param file to be updated
+     * @param content folder that the uploaded file will reside
+     * @param callback to return the request result back
+     */
+    public abstract void updateFileAsync(@NonNull CFile file, File content, ApiCallback callback);
+
+    /**
+     * Async rename file
+     *
+     * @param file to be renamed
+     * @param name for the file
+     * @param callback to return the request result back
+     */
+    public abstract void renameFileAsync(@NonNull CFile file, String name, ApiCallback callback);
+
+    /**
+     * Async move file to other folder
+     *
+     * @param file to be moved
+     * @param  folder folder that will contain the file, use null for root
+     * @param callback to return the request result back
+     */
+    public abstract void moveFileAsync(@NonNull CFile file, @Nullable CFolder folder, ApiCallback callback);
+
+
+    /**
+     * Async download file
+     * Files saved in temp folder under CloudProvider dir
+     * Developer must move the file to permanent storage location after acquired the file
+     *
+     * @param file to be downloaded
+     * @param filename for the downloaded file, use null for original filename
+     * @param callback to return the request result back
+     */
+    public abstract void downloadFileAsync(@NonNull CFile file, @Nullable String filename, ApiCallback callback);
+
+    /**
+     * Async delete file
+     *
+     * @param file to be deleted
+     * @param callback to return the request result back
+     */
+    public abstract void deleteFileAsync(@NonNull CFile file, ApiCallback callback);
+
+    /**
+     * Async search the cloud for files
+     *
+     * @param keyword to search for
+     * @param folder where the search is looking at
+     * @param callback to return the request result back
+     */
+    public abstract void searchFileAsync(@NonNull String keyword, CFolder folder, ApiCallback callback);
+
+    /**
+     * Async search the cloud for folders
+     *
+     * @param keyword to search for
+     * @param folder where the search is looking at
+     * @param callback to return the request result back
+     */
+    public abstract void searchFolderAsync(@NonNull String keyword, CFolder folder, ApiCallback callback);
+
+    /**
+     * Async search the cloud for all contents
+     *
+     * @param keyword to search for
+     * @param folder where the search is looking at
+     * @param callback to return the request result back
+     */
+    public abstract void searchAsync(@NonNull String keyword, CFolder folder, ApiCallback callback)
+    ;
+
+    /**
+     * Async get thumbnail from the file that if applicable
+     * Thumbnails saved in cache folder under CloudProvider dir, file will be clear by system
+     *
+     * @param file to retrieve the thumbnail
+     * @param callback to return the request result back
+     */
+    public abstract void getThumbnailAsync(@NonNull CFile file, ApiCallback callback);
+
+    /**
      *  Get file information from id
      *
      * @param folderId to retrieve the folder details
@@ -121,7 +275,8 @@ public abstract class BaseApi {
      *
      * @param name of the new folder
      * @param parent folder that the new folder will reside, use null for root folder
-     * @return RequestFailException that content various error types
+     * @return CFolder
+     * @throws RequestFailException that content various error types
      */
     public abstract CFolder createFolder(@NonNull String name, @Nullable CFolder parent) throws RequestFailException;
 
@@ -130,7 +285,8 @@ public abstract class BaseApi {
      *
      * @param name for the folder
      * @param folder to be renamed
-     * @return RequestFailException that content various error types
+     * @return CFolder
+     * @throws RequestFailException that content various error types
      */
     public abstract CFolder renameFolder(@NonNull CFolder folder, String name) throws RequestFailException;
 
@@ -139,7 +295,8 @@ public abstract class BaseApi {
      *
      * @param folder to be moved
      * @param parent folder that will contain the folder, use null for root
-     * @return RequestFailException that content various error types
+     * @return CFolder
+     * @throws RequestFailException that content various error types
      */
     public abstract CFolder moveFolder(@NonNull CFolder folder, @Nullable CFolder parent) throws RequestFailException;
 
@@ -166,6 +323,7 @@ public abstract class BaseApi {
      *
      * @param file to upload
      * @param parent folder that the uploaded file will reside, use null for root
+     * @return CFile
      * @throws RequestFailException
      */
     public abstract CFile uploadFile(@NonNull File file, @Nullable CFolder parent) throws RequestFailException;
@@ -176,6 +334,7 @@ public abstract class BaseApi {
      *
      * @param file to be updated
      * @param content folder that the uploaded file will reside
+     * @return CFile
      * @throws RequestFailException
      */
     public abstract CFile updateFile(@NonNull CFile file, File content) throws RequestFailException;
@@ -185,6 +344,7 @@ public abstract class BaseApi {
      *
      * @param name for the file
      * @param file to be renamed
+     * @return CFile
      * @return RequestFailException that content various error types
      */
     public abstract CFile renameFile(@NonNull CFile file, String name) throws RequestFailException;
@@ -194,6 +354,7 @@ public abstract class BaseApi {
      *
      * @param file to be moved
      * @param  folder folder that will contain the file, use null for root
+     * @return CFile
      * @return RequestFailException that content various error types
      */
     public abstract CFile moveFile(@NonNull CFile file, @Nullable CFolder folder) throws RequestFailException;
@@ -234,7 +395,7 @@ public abstract class BaseApi {
      *
      * @param keyword to search for
      * @param folder where the search is looking at
-     * @return  list of folders that match search criteria
+     * @return list of folders that match search criteria
      * @throws RequestFailException
      */
     public abstract List<CFolder> searchFolder(@NonNull String keyword, CFolder folder) throws RequestFailException;
@@ -244,7 +405,7 @@ public abstract class BaseApi {
      *
      * @param keyword to search for
      * @param folder where the search is looking at
-     * @return  list of files and folders that match search criteria
+     * @return list of files and folders that match search criteria
      * @throws RequestFailException
      */
     public abstract List<Object> search(@NonNull String keyword, CFolder folder) throws RequestFailException;
