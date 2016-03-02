@@ -26,6 +26,8 @@ import android.os.Parcelable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,7 +64,7 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
     /**
      * Switch between async mode or UI blocking mode
      */
-    private static final boolean ASYNC_MODE = true;
+    private static boolean ASYNC_MODE = false;
 
     private static final int REQUEST_UPLOAD_FILE = 1;
     private static final int REQUEST_DOWNLOAD_FILE = 2;
@@ -573,21 +575,55 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_api, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        switch (id) {
+            case R.id.action_async:
+                // toggle async mode
+                item.setChecked(!item.isChecked());
+                ASYNC_MODE = item.isChecked();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     /**
      * Create new folder
      */
     private class CreateFolderTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
                 CFolder folder = mApi.createFolder((String) params[0], (CFolder) params[1]);
-                showToast("Folder " + folder.getName() + " created");
+                mMessage = "Folder " + folder.getName() + " created";
             } catch (RequestFailException e) {
                 e.printStackTrace();
-                showToast(e.getMessage());
+                mMessage = e.getMessage();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -596,16 +632,24 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      */
     private class DeleteFolderTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
                 mApi.deleteFolder((CFolder) params[0]);
-                showToast("Folder " + ((CFolder) params[0]).getName() + " deleted");
+                mMessage = "Folder " + ((CFolder) params[0]).getName() + " deleted";
             } catch (RequestFailException e) {
                 e.printStackTrace();
-                showToast(e.getMessage());
+                mMessage = e.getMessage();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -613,6 +657,8 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      * Upload a sample file in the assets dir
      */
     private class UploadFileTask extends AsyncTask<Object, Void, Void> {
+
+        private String mMessage;
 
         @Override
         protected Void doInBackground(Object... params) {
@@ -624,14 +670,21 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
                                 new FileOutputStream(file));
                     }
                 }
-                mApi.uploadFile(file, (CFolder) params[0]);
+                CFile cFile = mApi.uploadFile(file, (CFolder) params[0]);
+                mMessage = "File " + cFile.getName() + " uploaded";
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                mMessage = e.getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -639,6 +692,8 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      * Upload a sample photo in the assets dir
      */
     private class UploadPhotoTask extends AsyncTask<Object, Void, Void> {
+
+        private String mMessage;
 
         @Override
         protected Void doInBackground(Object... params) {
@@ -650,14 +705,21 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
                                 new FileOutputStream(file));
                     }
                 }
-                mApi.uploadFile(file, (CFolder) params[0]);
+                CFile cFile = mApi.uploadFile(file, (CFolder) params[0]);
+                mMessage = "File " + cFile.getName() + " uploaded";
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                mMessage = e.getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -666,15 +728,24 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      */
     private class DeleteFileTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
                 mApi.deleteFile((CFile) params[0]);
+                mMessage = "File " + ((CFile) params[0]).getName() + " deleted";
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                mMessage = e.getMessage();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -683,15 +754,24 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      */
     private class DownloadFileTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
-                mApi.downloadFile((CFile) params[0], (String) params[1]);
+                File file = mApi.downloadFile((CFile) params[0], (String) params[1]);
+                mMessage = "File " + file.getName() + " downloaded";
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                mMessage = e.getMessage();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -700,17 +780,24 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      */
     private class RenameFolderTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
                 CFolder folder = mApi.renameFolder((CFolder) params[0], (String) params[1]);
-                showToast("Folder " + ((CFolder) params[0]).getName() + " renamed to " + folder.getName());
+                mMessage = "Folder " + ((CFolder) params[0]).getName() + " renamed to " + folder.getName();
             } catch (RequestFailException e) {
                 e.printStackTrace();
-                showToast(e.getMessage());
+                mMessage = e.getMessage();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -719,15 +806,24 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      */
     private class RenameFileTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
-                mApi.renameFile((CFile) params[0], (String) params[1]);
+                CFile file = mApi.renameFile((CFile) params[0], (String) params[1]);
+                mMessage = "File " + ((CFile) params[0]).getName() + " renamed to " + file.getName();
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                mMessage = e.getMessage();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -736,15 +832,24 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      */
     private class MoveFileTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
-                mApi.moveFile((CFile) params[0], (CFolder) params[1]);
+                CFile file = mApi.moveFile((CFile) params[0], (CFolder) params[1]);
+                mMessage = "File " + file.getName() + " moved to " + ((CFolder) params[1]).getName();
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                mMessage = e.getMessage();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -752,6 +857,8 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      * Update the selected file with new content
      */
     private class UpdateFileTask extends AsyncTask<Object, Void, Void> {
+
+        private String mMessage;
 
         @Override
         protected Void doInBackground(Object... params) {
@@ -763,8 +870,10 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
                                 new FileOutputStream(file));
                     }
                 }
-                mApi.updateFile((CFile) params[0], file);
+                CFile cFile = mApi.updateFile((CFile) params[0], file);
+                showToast("File " + cFile.getName() + " updated");
             } catch (RequestFailException e) {
+                showToast(e.getMessage());
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -782,9 +891,11 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
         @Override
         protected Void doInBackground(Object... params) {
             try {
-                mApi.moveFolder((CFolder) params[0], (CFolder) params[1]);
+                CFolder folder = mApi.moveFolder((CFolder) params[0], (CFolder) params[1]);
+                showToast("Folder " + folder.getName() + " moved to " + ((CFolder) params[1]).getName());
             } catch (RequestFailException e) {
                 e.printStackTrace();
+                showToast(e.getMessage());
             }
 
             return null;

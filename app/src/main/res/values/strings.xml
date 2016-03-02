@@ -7,4 +7,5 @@
     <string name="action_pick_file">Pick file</string>
     <string name="action_pick_folder">Pick folder</string>
 
+    <string name="action_async">Async mode</string>
 </resources>

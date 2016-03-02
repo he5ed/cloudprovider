@@ -26,6 +26,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -56,6 +57,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -494,26 +496,13 @@ public class CloudDriveApi extends BaseApi {
                 }
                 return list;
             } else {
-                switch (response.code()) {
-                    case 404:
-                        // no item found
-                        throw new RequestFailException("No item found");
-                    case 401:
-                        // unauthorized
-                        throw new RequestFailException("Unauthorized request");
-                    default:
-                        break;
-                }
+                throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
-
-        return null;
     }
 
     /**
@@ -564,10 +553,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -609,10 +596,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -638,7 +623,6 @@ public class CloudDriveApi extends BaseApi {
             parentList.add(parent != null ? parent.getId() : getRoot().getId());
             params.put("parents", new JSONArray(parentList));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -669,10 +653,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -691,7 +673,6 @@ public class CloudDriveApi extends BaseApi {
         try {
             params.put("name", name);
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -728,10 +709,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -752,7 +731,6 @@ public class CloudDriveApi extends BaseApi {
             parentList.add(parent != null ? parent.getId() : getRoot().getId());
             params.put("parents", new JSONArray(parentList));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -789,10 +767,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -814,7 +790,6 @@ public class CloudDriveApi extends BaseApi {
         try {
             params.put("kind", "FOLDER");
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -839,12 +814,11 @@ public class CloudDriveApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                Log.d(TAG, "CFolder with the id: " + folder.getName() + " deleted");
+                Log.d(TAG, "Folder with the id: " + folder.getId() + " deleted");
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -876,10 +850,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -905,7 +877,6 @@ public class CloudDriveApi extends BaseApi {
             parentList.add(parent != null ? parent.getId() : getRoot().getId());
             params.put("parents", new JSONArray(parentList));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -933,10 +904,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -976,10 +945,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -990,7 +957,7 @@ public class CloudDriveApi extends BaseApi {
             throw new RequestFailException("Access token not available");
         }
 
-        // exist if same filename
+        // exit if same filename
         if (file.getName().equals(name)) return file;
 
         // create parameter as json
@@ -998,7 +965,6 @@ public class CloudDriveApi extends BaseApi {
         try {
             params.put("name", name);
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -1035,10 +1001,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1056,7 +1020,6 @@ public class CloudDriveApi extends BaseApi {
             parentList.add(folder != null ? folder.getId() : getRoot().getId());
             params.put("parents", new JSONArray(parentList));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -1093,10 +1056,8 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1120,18 +1081,21 @@ public class CloudDriveApi extends BaseApi {
                 .build();
 
         try {
-            File localFile = new File(mContext.getFilesDir(),
-                    TextUtils.isEmpty(filename) ? file.getName() : filename);
-
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(localFile));
+                if (FilesUtils.getInternalAvailableBytes() < response.body().contentLength()) {
+                    // insufficient storage space throw exception
+                    throw new RequestFailException("Insufficient storage");
+                } else {
+                    File localFile = new File(CloudProvider.CACHE_DIR,
+                            TextUtils.isEmpty(filename) ? file.getName() : filename);
+                    FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(localFile));
+                    return localFile;
+                }
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
-            return localFile;
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1153,7 +1117,6 @@ public class CloudDriveApi extends BaseApi {
         try {
             params.put("kind", "FOLDER");
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -1183,7 +1146,6 @@ public class CloudDriveApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1281,24 +1243,24 @@ public class CloudDriveApi extends BaseApi {
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RequestFailException(e.getMessage());
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new RequestFailException(e.getMessage());
+        } catch (IOException e) {
+            throw new RequestFailException(e.getMessage());
         }
-        return null;
     }
 
     /**
-     * Download thumbnail via the temperary url
+     * Download thumbnail via the temporary url
      *
-     * @param url
-     * @param filename
-     * @return
+     * @param url that point to the download location of the bitmap file. This url is temporary
+     *            and will expired after sometimes. Must request a fresh url every time a new
+     *            request is made.
+     * @param filename for the downloaded bitmap file
+     * @return bitmap file of the thumbnail
      * @throws RequestFailException
      */
-    private File downloadThumbnail(@NonNull String url, String filename) throws RequestFailException {
+    private File downloadThumbnail(@NonNull String url, @NonNull String filename) throws RequestFailException {
 
         Request request = new Request.Builder()
                 .url(url)
@@ -1306,104 +1268,1147 @@ public class CloudDriveApi extends BaseApi {
                 .build();
 
         try {
-            File localFile = new File(mContext.getFilesDir(), filename);
-
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(localFile));
+                if (FilesUtils.getInternalAvailableBytes() < response.body().contentLength()) {
+                    // insufficient storage space throw exception
+                    throw new RequestFailException("Insufficient storage");
+                } else {
+                    File localFile = new File(CloudProvider.CACHE_DIR, filename);
+                    FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(localFile));
+                    return localFile;
+                }
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
-            return localFile;
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
 
     @Override
-    public void getFolderInfoAsync(@NonNull String folderId, IApiCallback callback) {
+    public void getFolderInfoAsync(@NonNull String folderId, final IApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + folderId)
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return folder object
+                try {
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void exploreFolderAsync(@NonNull CFolder folder, int offset, ApiCallback callback) {
+    public void exploreFolderAsync(@NonNull final CFolder folder, final int offset, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        // if folder id is empty set it to root id
+        if (TextUtils.isEmpty(folder.getId())) {
+            // check whether ROOT_ID is bundled in the callback
+            String rootId = callback.bundle.getString("ROOT_ID");
+            if (TextUtils.isEmpty(rootId)) {
+                getRootIdAsync(new ApiCallback() {
+                    @Override
+                    public void onUiRequestFailure(Request request, RequestFailException exception) {
+                        callback.onRequestFailure(request, exception);
+                    }
+
+                    @Override
+                    public void onUiReceiveItems(Request request, List items) {
+                        // get ROOT_ID as save to callback's bundle
+                        String rootId = (String) items.get(0);
+                        callback.bundle.putString("ROOT_ID", rootId);
+                        exploreFolderAsync(folder, offset, callback);
+                    }
+                });
+                return;
+            } else {
+                folder.setId(rootId);
+            }
+        }
+
+        final ArrayList<Parcelable> list = new ArrayList<>();
+        final String folderId = folder.getId();
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + folderId + "/children")
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    int total = jsonObject.getInt("count");
+                    // return null if no item found
+                    if (total == 0) {
+                        callback.onReceiveItems(request, null);
+                        // need to return in current thread
+                        return;
+                    }
+
+                    JSONArray entries = jsonObject.getJSONArray("data");
+                    list.addAll(createItemList(entries));
+                    // check bundle for existing list
+                    List<Parcelable> previousList = callback.bundle.getParcelableArrayList("previous_list");
+                    if (previousList != null && previousList.size() > 0)
+                        list.addAll(previousList);
+
+                    // pagination available
+                    if (jsonObject.has("nextToken")) {
+                        // update previous list
+                        callback.bundle.putParcelableArrayList("previous_list", list);
+                        exploreFolderContinueAsync(folderId, jsonObject.getString("nextToken"), callback);
+                    } else {
+                        callback.onReceiveItems(request, list);
+                    }
+                } catch (RequestFailException e) {
+                    callback.onRequestFailure(request, e);
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
+    }
+
+    /**
+     * Get continue folder items
+     *
+     * @param folderId of the folder to explore
+     * @param startToken nextToken from previous request for access more content
+     */
+    public synchronized void exploreFolderContinueAsync(final String folderId, String startToken, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
+
+        final ArrayList<Parcelable> list = new ArrayList<>();
+
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + folderId + "/children")
+                .appendQueryParameter("startToken", startToken)
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    int total = jsonObject.getInt("count");
+                    // return null if no item found
+                    if (total == 0) {
+                        callback.onReceiveItems(request, null);
+                        // need to return in current thread
+                        return;
+                    }
+
+                    JSONArray entries = jsonObject.getJSONArray("data");
+                    list.addAll(createItemList(entries));
+                    // check bundle for existing list
+                    List<Parcelable> previousList = callback.bundle.getParcelableArrayList("previous_list");
+                    if (previousList != null && previousList.size() > 0)
+                        list.addAll(previousList);
+
+                    // pagination available
+                    if (jsonObject.has("nextToken")) {
+                        // update previous list
+                        callback.bundle.putParcelableArrayList("previous_list", list);
+                        exploreFolderContinueAsync(folderId, jsonObject.getString("nextToken"), callback);
+                    } else {
+                        callback.onReceiveItems(request, list);
+                    }
+                } catch (RequestFailException e) {
+                    callback.onRequestFailure(request, e);
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    JSONArray entries = jsonObject.getJSONArray("data");
+                    list.addAll(createItemList(entries));
+                    // check bundle for existing list
+                    List<Parcelable> previousList = callback.bundle.getParcelableArrayList("previous_list");
+                    if (previousList != null && previousList.size() > 0)
+                        list.addAll(previousList);
+
+                    // pagination available
+                    if (jsonObject.has("nextToken")) {
+                        // update previous list
+                        callback.bundle.putParcelableArrayList("previous_list", list);
+                        exploreFolderContinueAsync(folderId, jsonObject.getString("nextToken"), callback);
+                    } else {
+                        callback.onReceiveItems(request, list);
+                    }
+                } catch (RequestFailException e) {
+                    callback.onRequestFailure(request, e);
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void createFolderAsync(@NonNull String name, @Nullable CFolder parent, ApiCallback callback) {
+    public void createFolderAsync(@NonNull String name, @Nullable CFolder parent, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/")
+                .build()
+                .toString();
+
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            params.put("name", name);
+            params.put("kind", "FOLDER");
+            ArrayList<String> parentList = new ArrayList<>();
+            parentList.add(parent != null ? parent.getId() : getRoot().getId());
+            params.put("parents", new JSONArray(parentList));
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        RequestBody body = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8(params.toString());
+            }
+        };
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .post(body)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return folder object
+                try {
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void renameFolderAsync(@NonNull CFolder folder, String name, ApiCallback callback) {
+    public void renameFolderAsync(@NonNull CFolder folder, String name, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        // exit if root or same name
+        if (folder.isRoot() || folder.getName().equals(name)) {
+            callback.onReceiveItems(null, Arrays.asList(folder));
+            return;
+        }
+
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            params.put("name", name);
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        RequestBody body = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8(params.toString());
+            }
+        };
+
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + folder.getId())
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .patch(body)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return folder object
+                try {
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void moveFolderAsync(@NonNull CFolder folder, @Nullable CFolder parent, ApiCallback callback) {
+    public void moveFolderAsync(@NonNull CFolder folder, @Nullable CFolder parent, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        // exit if root or same name
+        if (folder.isRoot() || parent != null && folder.getId().equals(parent.getId())) {
+            callback.onReceiveItems(null, Arrays.asList(folder));
+            return;
+        }
+
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            ArrayList<String> parentList = new ArrayList<>();
+            parentList.add(parent != null ? parent.getId() : getRoot().getId());
+            params.put("parents", new JSONArray(parentList));
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        RequestBody body = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8(params.toString());
+            }
+        };
+
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + folder.getId())
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .patch(body)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return folder object
+                try {
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void deleteFolderAsync(@NonNull CFolder folder, ApiCallback callback) {
+    public void deleteFolderAsync(@NonNull final CFolder folder, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("trash/" + folder.getId())
+                .build()
+                .toString();
+
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            params.put("kind", "FOLDER");
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        RequestBody body = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8(params.toString());
+            }
+        };
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .put(body)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // log successful response
+                Log.d(TAG, "Folder with the id: " + folder.getId() + " deleted");
+                callback.onReceiveItems(request, null);
+            }
+        });
     }
 
     @Override
-    public void getFileInfoAsync(@NonNull String fileId, ApiCallback callback) {
+    public void getFileInfoAsync(@NonNull String fileId, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + fileId)
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile file = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(file));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void uploadFileAsync(@NonNull File file, @Nullable CFolder parent, ApiCallback callback) {
+    public void uploadFileAsync(@NonNull File file, @Nullable CFolder parent, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mContentUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes")
+                .build()
+                .toString();
+
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            params.put("name", file.getName());
+            params.put("kind", "FILE");
+            ArrayList<String> parentList = new ArrayList<>();
+            parentList.add(parent != null ? parent.getId() : getRoot().getId());
+            params.put("parents", new JSONArray(parentList));
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        // create multipart body
+        MediaType fileType = MediaType.parse(FilesUtils.getFileType(file));
+        RequestBody multipart = new MultipartBuilder()
+                .type(MultipartBuilder.FORM)
+                .addFormDataPart("metadata", params.toString())
+                .addFormDataPart("content", file.getName(),
+                        RequestBody.create(fileType, file))
+                .build();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .post(multipart)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile file = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(file));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void updateFileAsync(@NonNull CFile file, File content, ApiCallback callback) {
+    public void updateFileAsync(@NonNull CFile file, File content, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mContentUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + file.getId() + "/content")
+                .build()
+                .toString();
+
+        // create multipart body
+        MediaType fileType = MediaType.parse(FilesUtils.getFileType(content));
+        RequestBody multipart = new MultipartBuilder()
+                .type(MultipartBuilder.FORM)
+                .addFormDataPart("content", file.getName(),
+                        RequestBody.create(fileType, content))
+                .build();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .put(multipart)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile file = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(file));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void renameFileAsync(@NonNull CFile file, String name, ApiCallback callback) {
+    public void renameFileAsync(@NonNull CFile file, String name, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        // exit if same filename
+        if (file.getName().equals(name)) {
+            callback.onReceiveItems(null, Arrays.asList(file));
+            return;
+        }
+
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            params.put("name", name);
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        RequestBody body = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8(params.toString());
+            }
+        };
+
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + file.getId())
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .patch(body)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile file = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(file));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void moveFileAsync(@NonNull CFile file, @Nullable CFolder folder, ApiCallback callback) {
+    public void moveFileAsync(@NonNull CFile file, @Nullable CFolder folder, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            ArrayList<String> parentList = new ArrayList<>();
+            parentList.add(folder != null ? folder.getId() : getRoot().getId());
+            params.put("parents", new JSONArray(parentList));
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        RequestBody body = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8(params.toString());
+            }
+        };
+
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + file.getId())
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .patch(body)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile file = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(file));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
     }
 
     @Override
-    public void downloadFileAsync(@NonNull CFile file, @Nullable String filename, ApiCallback callback) {
+    public void downloadFileAsync(@NonNull final CFile file, @Nullable final String filename, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mContentUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + file.getId() + "/content")
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // save file to storage
+                if (FilesUtils.getInternalAvailableBytes() < response.body().contentLength()) {
+                    // insufficient storage space throw exception
+                    callback.onRequestFailure(request, new RequestFailException("Insufficient storage"));
+                } else {
+                    File localFile = new File(CloudProvider.CACHE_DIR,
+                            TextUtils.isEmpty(filename) ? file.getName() : filename);
+                    FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(localFile));
+                    callback.onReceiveItems(request, Arrays.asList(localFile));
+                }
+            }
+        });
     }
 
     @Override
-    public void deleteFileAsync(@NonNull CFile file, ApiCallback callback) {
+    public void deleteFileAsync(@NonNull final CFile file, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("trash/" + file.getId())
+                .build()
+                .toString();
+
+        // create parameter as json
+        final JSONObject params= new JSONObject();
+        try {
+            params.put("kind", "FOLDER");
+        } catch (JSONException e) {
+            callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
+        }
+
+        RequestBody body = new RequestBody() {
+            @Override
+            public MediaType contentType() {
+                return JSON;
+            }
+
+            @Override
+            public void writeTo(BufferedSink sink) throws IOException {
+                sink.writeUtf8(params.toString());
+            }
+        };
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .put(body)
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // log successful response
+                Log.d(TAG, "File with the id: " + file.getId() + " deleted");
+                callback.onReceiveItems(request, null);
+            }
+        });
     }
 
     @Override
-    public void searchFileAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
+    public void searchFileAsync(@NonNull final String keyword, CFolder folder, final ApiCallback callback) {
+        exploreFolderAsync(folder, 0, new ApiCallback() {
+            @Override
+            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                // echo exception to callback
+                callback.onUiRequestFailure(request, exception);
+            }
 
+            @Override
+            public void onUiReceiveItems(Request request, List items) {
+                List<CFile> resultList = new ArrayList<>();
+                // search through every item's name for keyword match in case insensitive mode
+                for (Object item : items) {
+                    if (CFile.class.isAssignableFrom(item.getClass())) {
+                        if (((CFile) item).getName().toLowerCase().contains(keyword.toLowerCase()))
+                            resultList.add((CFile) item);
+                    }
+                }
+                callback.onUiReceiveItems(request, resultList);
+            }
+        });
     }
 
     @Override
-    public void searchFolderAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
+    public void searchFolderAsync(@NonNull final String keyword, CFolder folder, final ApiCallback callback) {
+        exploreFolderAsync(folder, 0, new ApiCallback() {
+            @Override
+            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                // echo exception to callback
+                callback.onUiRequestFailure(request, exception);
+            }
 
+            @Override
+            public void onUiReceiveItems(Request request, List items) {
+                List<CFolder> resultList = new ArrayList<>();
+                // search through every item's name for keyword match in case insensitive mode
+                for (Object item : items) {
+                    if (CFolder.class.isAssignableFrom(item.getClass())) {
+                        if (((CFolder) item).getName().toLowerCase().contains(keyword.toLowerCase()))
+                            resultList.add((CFolder) item);
+                    }
+                }
+                callback.onUiReceiveItems(request, resultList);
+            }
+        });
     }
 
     @Override
-    public void searchAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
+    public void searchAsync(@NonNull final String keyword, CFolder folder, final ApiCallback callback) {
+        exploreFolderAsync(folder, 0, new ApiCallback() {
+            @Override
+            public void onUiRequestFailure(Request request, RequestFailException exception) {
+                // echo exception to callback
+                callback.onUiRequestFailure(request, exception);
+            }
 
+            @Override
+            public void onUiReceiveItems(Request request, List items) {
+                List<Object> resultList = new ArrayList<>();
+                // search through every item's name for keyword match in case insensitive mode
+                for (Object item : items) {
+                    if (CFolder.class.isAssignableFrom(item.getClass())) {
+                        if (((CFolder) item).getName().toLowerCase().contains(keyword.toLowerCase()))
+                            resultList.add(item);
+                    } else if (CFile.class.isAssignableFrom(item.getClass())) {
+                        if (((CFile) item).getName().toLowerCase().contains(keyword.toLowerCase()))
+                            resultList.add(item);
+                    }
+                }
+                callback.onUiReceiveItems(request, resultList);
+            }
+        });
     }
 
     @Override
-    public void getThumbnailAsync(@NonNull CFile file, ApiCallback callback) {
+    public void getThumbnailAsync(@NonNull CFile file, final ApiCallback callback) {
+        if (TextUtils.isEmpty(mAccessToken)) {
+            callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
+        }
 
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes/" + file.getId())
+                .appendQueryParameter("asset", "ALL")
+                .appendQueryParameter("tempLink", "true")
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    if (jsonObject.has("assets")) {
+                        JSONArray assets = jsonObject.getJSONArray("assets");
+                        JSONObject asset = assets.getJSONObject(0);
+                        if (asset.has("tempLink")) {
+                            String fileUrl = asset.getString("tempLink");
+                            String filename = asset.getString("name");
+                            downloadThumbnailAsync(fileUrl, filename, callback);
+                        } else {
+                            callback.onRequestFailure(request, new RequestFailException("Thumbnail url not available"));
+                        }
+                    } else {
+                        callback.onRequestFailure(request, new RequestFailException("Thumbnail not available"));
+                    }
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+            }
+        });
+    }
+
+    /**
+     * Download thumbnail via the temporary url
+     *
+     * @param url that point to the download location of the bitmap file. This url is temporary
+     *            and will expired after sometimes. Must request a fresh url every time a new
+     *            request is made.
+     * @param filename for the downloaded bitmap file
+     * @param callback to return the request result back
+     */
+    private void downloadThumbnailAsync(@NonNull String url, @NonNull final String filename, final ApiCallback callback) {
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                if (FilesUtils.getInternalAvailableBytes() < response.body().contentLength()) {
+                    // insufficient storage space throw exception
+                    callback.onRequestFailure(request, new RequestFailException("Insufficient storage"));
+                } else {
+                    File localFile = new File(CloudProvider.CACHE_DIR, filename);
+                    FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(localFile));
+                    callback.onReceiveItems(request, Arrays.asList(localFile));
+                }
+            }
+        });
     }
 
     /**
@@ -1413,7 +2418,7 @@ public class CloudDriveApi extends BaseApi {
      * @return list that contains CFile and CFolder
      * @throws RequestFailException
      */
-    private List<Object> createItemList(JSONArray jsonArray) throws RequestFailException {
+    private List createItemList(JSONArray jsonArray) throws RequestFailException {
         if (jsonArray == null || jsonArray.length() == 0) return null;
 
         List<Object> list = new ArrayList<>();
@@ -1481,5 +2486,57 @@ public class CloudDriveApi extends BaseApi {
         }
 
         return null;
+    }
+
+    /**
+     * Async get root folder id
+     *
+     * @param callback to return the request result back
+     */
+    private void getRootIdAsync(final ApiCallback callback) {
+        Uri uri = Uri.parse(mMetadataUrl);
+        String url = uri.buildUpon()
+                .appendEncodedPath("nodes")
+                .appendQueryParameter("filters", "kind:FOLDER AND isRoot:true")
+                .build()
+                .toString();
+
+        final Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", String.format("Bearer %s", mAccessToken))
+                .get()
+                .build();
+
+        mHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    JSONArray entries = jsonObject.getJSONArray("data");
+                    if (entries.length() > 0) {
+                        JSONObject root = entries.getJSONObject(0);
+                        ROOT_ID = root.getString("id");
+                        callback.onUiReceiveItems(request, Arrays.asList(ROOT_ID));
+                    } else {
+                        callback.onRequestFailure(request, new RequestFailException("Cannot find root directory"));
+                    }
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
+
+            }
+        });
     }
 }

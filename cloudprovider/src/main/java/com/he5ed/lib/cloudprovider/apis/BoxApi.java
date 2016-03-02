@@ -496,10 +496,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -538,10 +536,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -558,7 +554,6 @@ public class BoxApi extends BaseApi {
             params.put("parent",
                     new JSONObject().put("id", parent != null ? parent.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -589,10 +584,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -611,7 +604,6 @@ public class BoxApi extends BaseApi {
         try {
             params.put("name", name);
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -642,10 +634,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -665,7 +655,6 @@ public class BoxApi extends BaseApi {
             params.put("parent", new JSONObject()
                     .put("id", parent != null ? parent.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -696,10 +685,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -732,7 +719,6 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -761,10 +747,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -804,7 +788,6 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
         return null;
@@ -856,7 +839,6 @@ public class BoxApi extends BaseApi {
             }
             return file;
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -874,7 +856,6 @@ public class BoxApi extends BaseApi {
             params.put("parent",
                     new JSONObject().put("id", parent != null ? parent.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -904,10 +885,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -943,10 +922,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -965,7 +942,6 @@ public class BoxApi extends BaseApi {
         try {
             params.put("name", name);
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -996,10 +972,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1016,7 +990,6 @@ public class BoxApi extends BaseApi {
             params.put("parent", new JSONObject()
                     .put("id", folder != null ? folder.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
 
@@ -1047,10 +1020,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1076,7 +1047,6 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1184,10 +1154,8 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (JSONException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
     }
@@ -1233,7 +1201,6 @@ public class BoxApi extends BaseApi {
                 throw new RequestFailException(response.message(), response.code());
             }
         } catch (IOException e) {
-            e.printStackTrace();
             throw new RequestFailException(e.getMessage());
         }
         return null;
@@ -1243,6 +1210,7 @@ public class BoxApi extends BaseApi {
     public void getFolderInfoAsync(@NonNull String folderId, final IApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         if (TextUtils.isEmpty(folderId)) return;
@@ -1262,10 +1230,17 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
                 try {
-                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
                     // create folder and send to callback
-                    callback.onReceiveItems(request, Arrays.asList(buildFolder(jsonObject)));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
                 } catch (JSONException e) {
                     // send exception to callback
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
@@ -1278,6 +1253,7 @@ public class BoxApi extends BaseApi {
     public void exploreFolderAsync(@NonNull final CFolder folder, int offset, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         final ArrayList<Parcelable> list = new ArrayList<>();
@@ -1305,6 +1281,13 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().string());
                     // create folder and send to callback
@@ -1335,7 +1318,6 @@ public class BoxApi extends BaseApi {
                     // send exception to callback
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 } catch (RequestFailException e) {
-                    e.printStackTrace();
                     // send exception to callback
                     callback.onRequestFailure(request, e);
                 }
@@ -1347,6 +1329,7 @@ public class BoxApi extends BaseApi {
     public void createFolderAsync(@NonNull String name, @Nullable CFolder parent, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
         // create parameter as json
         final JSONObject params= new JSONObject();
@@ -1355,8 +1338,8 @@ public class BoxApi extends BaseApi {
             params.put("parent",
                     new JSONObject().put("id", parent != null ? parent.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
         }
 
         RequestBody body = new RequestBody() {
@@ -1386,10 +1369,18 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
+                    callback.onRequestFailure(request,
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return folder object
                 try {
-                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
                     // create folder and send to callback
-                    callback.onReceiveItems(request, Arrays.asList(buildFolder(jsonObject)));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
                 } catch (JSONException e) {
                     // send exception to callback
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
@@ -1402,6 +1393,7 @@ public class BoxApi extends BaseApi {
     public void renameFolderAsync(@NonNull CFolder folder, String name, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         // exit if root or same name
@@ -1415,8 +1407,8 @@ public class BoxApi extends BaseApi {
         try {
             params.put("name", name);
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
         }
 
         RequestBody body = new RequestBody() {
@@ -1445,20 +1437,20 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    // return folder object
-                    try {
-                        CFolder newFolder = buildFolder(new JSONObject(response.body().string()));
-                        callback.onReceiveItems(request, Arrays.asList(newFolder));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
                 }
 
+                // return folder object
+                try {
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
             }
         });
     }
@@ -1467,6 +1459,7 @@ public class BoxApi extends BaseApi {
     public void moveFolderAsync(@NonNull CFolder folder, @Nullable CFolder parent, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         // exit if root or same name
@@ -1481,8 +1474,8 @@ public class BoxApi extends BaseApi {
             params.put("parent", new JSONObject()
                     .put("id", parent != null ? parent.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
         }
 
         RequestBody body = new RequestBody() {
@@ -1511,18 +1504,19 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    // return folder object
-                    try {
-                        CFolder newFolder = buildFolder(new JSONObject(response.body().string()));
-                        callback.onReceiveItems(request, Arrays.asList(newFolder));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return folder object
+                try {
+                    CFolder folder = buildFolder(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(folder));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 }
             }
         });
@@ -1532,6 +1526,7 @@ public class BoxApi extends BaseApi {
     public void deleteFolderAsync(@NonNull CFolder folder, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         final String folderId = folder.getId();
@@ -1556,13 +1551,16 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "Folder with the id: " + folderId + " deleted");
-                    callback.onReceiveItems(request, null);
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
                 }
+
+                // log successful response
+                Log.d(TAG, "Folder with the id: " + folderId + " deleted");
+                callback.onReceiveItems(request, null);
             }
         });
     }
@@ -1571,9 +1569,11 @@ public class BoxApi extends BaseApi {
     public void getFileInfoAsync(@NonNull String fileId, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         if (TextUtils.isEmpty(fileId)) {
+            callback.onRequestFailure(null, new RequestFailException("Empty file ID"));
             return;
         }
 
@@ -1591,20 +1591,19 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    // new file created
-                    CFile file = null;
-                    try {
-                        file = buildFile(new JSONObject(response.body().string()));
-                        callback.onReceiveItems(request, Arrays.asList(file));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    }
-
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile file = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(file));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 }
             }
         });
@@ -1614,6 +1613,7 @@ public class BoxApi extends BaseApi {
     public void uploadFileAsync(@NonNull File file, @Nullable CFolder parent, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         // create parameter as json
@@ -1623,8 +1623,8 @@ public class BoxApi extends BaseApi {
             params.put("parent",
                     new JSONObject().put("id", parent != null ? parent.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
         }
 
         // create multipart body
@@ -1650,20 +1650,20 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    try {
-                        // new file created
-                        JSONObject jsonObject = null;
-                        jsonObject = new JSONObject(response.body().string());
-                        JSONArray entries = jsonObject.getJSONArray("entries");
-                        callback.onReceiveItems(request, Arrays.asList(buildFile(entries.getJSONObject(0))));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // new file created
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    JSONArray entries = jsonObject.getJSONArray("entries");
+                    callback.onReceiveItems(request, Arrays.asList(buildFile(entries.getJSONObject(0))));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 }
             }
         });
@@ -1673,6 +1673,7 @@ public class BoxApi extends BaseApi {
     public void updateFileAsync(@NonNull CFile file, File content, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         // create multipart body
@@ -1697,20 +1698,21 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    // new file created
-                    JSONObject jsonObject = null;
-                    try {
-                        jsonObject = new JSONObject(response.body().string());
-                        JSONArray entries = jsonObject.getJSONArray("entries");
-                        callback.onReceiveItems(request, Arrays.asList(buildFile(entries.getJSONObject(0))));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
-                            new RequestFailException(response.message(), response.code()));                }
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // new file created
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    JSONArray entries = jsonObject.getJSONArray("entries");
+                    callback.onReceiveItems(request, Arrays.asList(buildFile(entries.getJSONObject(0))));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                }
             }
         });
     }
@@ -1719,10 +1721,12 @@ public class BoxApi extends BaseApi {
     public void renameFileAsync(@NonNull CFile file, String name, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
-        // exist if same filename
+        // exit if same filename
         if (file.getName().equals(name)) {
+            callback.onUiReceiveItems(null, Arrays.asList(file));
             return;
         }
 
@@ -1731,8 +1735,8 @@ public class BoxApi extends BaseApi {
         try {
             params.put("name", name);
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
         }
 
         RequestBody body = new RequestBody() {
@@ -1761,18 +1765,19 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    // return file object
-                    try {
-                        CFile newFile = buildFile(new JSONObject(response.body().string()));
-                        callback.onReceiveItems(request, Arrays.asList(newFile));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile newFile = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(newFile));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 }
             }
         });
@@ -1782,6 +1787,7 @@ public class BoxApi extends BaseApi {
     public void moveFileAsync(@NonNull CFile file, @Nullable CFolder folder, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         // create parameter as json
@@ -1790,8 +1796,8 @@ public class BoxApi extends BaseApi {
             params.put("parent", new JSONObject()
                     .put("id", folder != null ? folder.getId() : getRoot().getId()));
         } catch (JSONException e) {
-            e.printStackTrace();
             callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+            return;
         }
 
         RequestBody body = new RequestBody() {
@@ -1820,17 +1826,20 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    // return file object
-                    try {
-                        CFile newFile = buildFile(new JSONObject(response.body().string()));
-                        callback.onReceiveItems(request, Arrays.asList(newFile));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
-                            new RequestFailException(response.message(), response.code()));                }
+                            new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // return file object
+                try {
+                    CFile newFile = buildFile(new JSONObject(response.body().string()));
+                    callback.onReceiveItems(request, Arrays.asList(newFile));
+                } catch (JSONException e) {
+                    callback.onRequestFailure(null, new RequestFailException(e.getMessage()));
+                }
             }
         });
     }
@@ -1839,6 +1848,7 @@ public class BoxApi extends BaseApi {
     public void downloadFileAsync(@NonNull final CFile file, @Nullable final String filename, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         String fileId = file.getId();
@@ -1856,31 +1866,28 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    try {
-                        String finalFilename = TextUtils.isEmpty(filename) ? file.getName() : filename;
-
-                        switch (response.code()) {
-                            case 200:
-                                // redirect to url
-                                downloadFileAsync(response.request(), finalFilename, callback);
-                                break;
-                            case 202:
-                                // retry after due to file just uploaded
-                                delayDownloadFileAsync(file, finalFilename, callback);
-                                break;
-                            case 302:
-                                // redirect to url
-                                downloadFileAsync(response.request(), finalFilename, callback);
-                                break;
-                        }
-                    } catch (RequestFailException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // determine type of download process
+                String finalFilename = TextUtils.isEmpty(filename) ? file.getName() : filename;
+                switch (response.code()) {
+                    case 200:
+                        // redirect to url
+                        downloadFileAsync(response.request(), finalFilename, callback);
+                        break;
+                    case 202:
+                        // retry after due to file just uploaded
+                        delayDownloadFileAsync(file, finalFilename, callback);
+                        break;
+                    case 302:
+                        // redirect to url
+                        downloadFileAsync(response.request(), finalFilename, callback);
+                        break;
                 }
             }
         });
@@ -1912,10 +1919,8 @@ public class BoxApi extends BaseApi {
      *
      * @param request for redirect
      * @param callback to return the request result back
-     * @throws RequestFailException
      */
-    private void downloadFileAsync(@NonNull final Request request, @NonNull String filename, final ApiCallback callback)
-            throws RequestFailException {
+    private void downloadFileAsync(@NonNull final Request request, @NonNull String filename, final ApiCallback callback) {
         final File file = new File(CloudProvider.CACHE_DIR, filename);
 
         mHttpClient.newCall(request).enqueue(new Callback() {
@@ -1926,17 +1931,20 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    if (FilesUtils.getInternalAvailableBytes() < response.body().contentLength()) {
-                        // insufficient storage space throw exception
-                        callback.onRequestFailure(request, new RequestFailException("Insufficient storage"));
-                    } else {
-                        FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(file));
-                        callback.onReceiveItems(request, Arrays.asList(file));
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // save file to storage
+                if (FilesUtils.getInternalAvailableBytes() < response.body().contentLength()) {
+                    // insufficient storage space throw exception
+                    callback.onRequestFailure(request, new RequestFailException("Insufficient storage"));
+                } else {
+                    FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(file));
+                    callback.onReceiveItems(request, Arrays.asList(file));
                 }
             }
         });
@@ -1946,6 +1954,7 @@ public class BoxApi extends BaseApi {
     public void deleteFileAsync(@NonNull CFile file, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         final String fileId = file.getId();
@@ -1963,13 +1972,16 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    Log.d(TAG, "File with the id: " + fileId + " deleted");
-                    callback.onReceiveItems(request, null);
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
                 }
+
+                // log successful response
+                Log.d(TAG, "File with the id: " + fileId + " deleted");
+                callback.onReceiveItems(request, null);
             }
         });
     }
@@ -1978,6 +1990,7 @@ public class BoxApi extends BaseApi {
     public void searchFileAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         Map<String, Object> params = new HashMap<>();
@@ -1991,6 +2004,7 @@ public class BoxApi extends BaseApi {
     public void searchFolderAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         Map<String, Object> params = new HashMap<>();
@@ -2004,6 +2018,7 @@ public class BoxApi extends BaseApi {
     public void searchAsync(@NonNull String keyword, CFolder folder, ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         Map<String, Object> params = new HashMap<>();
@@ -2048,41 +2063,41 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response.body().string());
-                        int total = jsonObject.getInt("total_count");
-                        // return null if no item found
-                        if (total == 0) {
-                            callback.onReceiveItems(request, null);
-                            return;
-                        }
-
-                        JSONArray entries = jsonObject.getJSONArray("entries");
-                        list.addAll(createFilteredItemsList(entries, parent));
-                        // check bundle for existing list
-                        List<Parcelable> previousList = callback.bundle.getParcelableArrayList("previous_list");
-                        if (previousList != null && previousList.size() > 0)
-                            list.addAll(previousList);
-                        // suspect search result over 100 items
-                        if (total > 100 && total > list.size()) {
-                            params.put("offset", String.valueOf(list.size()));
-                            // update previous list
-                            callback.bundle.putParcelableArrayList("previous_list", list);
-                            searchAsync(params, parent, callback);
-                        } else {
-                            callback.onReceiveItems(request, list);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                    } catch (RequestFailException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, e);
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    int total = jsonObject.getInt("total_count");
+                    // return null if no item found
+                    if (total == 0) {
+                        callback.onReceiveItems(request, null);
+                        return;
+                    }
+
+                    JSONArray entries = jsonObject.getJSONArray("entries");
+                    list.addAll(createFilteredItemsList(entries, parent));
+                    // check bundle for existing list
+                    List<Parcelable> previousList = callback.bundle.getParcelableArrayList("previous_list");
+                    if (previousList != null && previousList.size() > 0)
+                        list.addAll(previousList);
+                    // suspect search result over 100 items
+                    if (total > 100 && total > list.size()) {
+                        params.put("offset", String.valueOf(list.size()));
+                        // update previous list
+                        callback.bundle.putParcelableArrayList("previous_list", list);
+                        searchAsync(params, parent, callback);
+                    } else {
+                        callback.onReceiveItems(request, list);
+                    }
+                } catch (JSONException e) {
+                    callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
+                } catch (RequestFailException e) {
+                    callback.onRequestFailure(request, e);
                 }
             }
         });
@@ -2092,6 +2107,7 @@ public class BoxApi extends BaseApi {
     public void getThumbnailAsync(@NonNull final CFile file, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
+            return;
         }
 
         Uri uri = Uri.parse(API_BASE_URL);
@@ -2118,29 +2134,27 @@ public class BoxApi extends BaseApi {
 
             @Override
             public void onResponse(Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    try {
-                        switch (response.code()) {
-                            case 200:
-                                // redirect to url
-                                downloadFileAsync(response.request(), file.getId() + ".png", callback);
-                                break;
-                            case 202:
-                                // retry after due to file just uploaded
-                                delayDownloadFileAsync(file, file.getId() + ".png", callback);
-                                break;
-                            case 302:
-                                // redirect to url
-                                downloadFileAsync(response.request(), file.getId() + ".png", callback);
-                                break;
-                        }
-                    } catch (RequestFailException e) {
-                        e.printStackTrace();
-                        callback.onRequestFailure(request, e);
-                    }
-                } else {
+                // send failed response to callback
+                if (!response.isSuccessful()) {
                     callback.onRequestFailure(request,
                             new RequestFailException(response.message(), response.code()));
+                    return;
+                }
+
+                // determine type of download
+                switch (response.code()) {
+                    case 200:
+                        // redirect to url
+                        downloadFileAsync(response.request(), file.getId() + ".png", callback);
+                        break;
+                    case 202:
+                        // retry after due to file just uploaded
+                        delayDownloadFileAsync(file, file.getId() + ".png", callback);
+                        break;
+                    case 302:
+                        // redirect to url
+                        downloadFileAsync(response.request(), file.getId() + ".png", callback);
+                        break;
                 }
             }
         });
@@ -2181,7 +2195,6 @@ public class BoxApi extends BaseApi {
                 }
 
             } catch (JSONException e) {
-                e.printStackTrace();
                 throw new RequestFailException(e.getMessage());
             }
         }

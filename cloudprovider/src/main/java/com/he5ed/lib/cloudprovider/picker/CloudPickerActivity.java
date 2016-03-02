@@ -41,9 +41,9 @@ import android.widget.TextView;
 import com.he5ed.lib.cloudprovider.CloudProvider;
 import com.he5ed.lib.cloudprovider.R;
 import com.he5ed.lib.cloudprovider.apis.BaseApi;
+import com.he5ed.lib.cloudprovider.models.CFile;
 import com.he5ed.lib.cloudprovider.models.CFolder;
 import com.he5ed.lib.cloudprovider.models.CloudAccount;
-import com.he5ed.lib.cloudprovider.models.CFile;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
