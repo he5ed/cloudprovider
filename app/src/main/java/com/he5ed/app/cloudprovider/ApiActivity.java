@@ -871,15 +871,21 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
                     }
                 }
                 CFile cFile = mApi.updateFile((CFile) params[0], file);
-                showToast("File " + cFile.getName() + " updated");
+                mMessage = "File " + cFile.getName() + " updated";
             } catch (RequestFailException e) {
-                showToast(e.getMessage());
                 e.printStackTrace();
+                mMessage = e.getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
+                mMessage = e.getMessage();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 
@@ -888,17 +894,24 @@ public class ApiActivity extends AppCompatActivity implements BaseApi.OnPrepareL
      */
     private class MoveFolderTask extends AsyncTask<Object, Void, Void> {
 
+        private String mMessage;
+
         @Override
         protected Void doInBackground(Object... params) {
             try {
                 CFolder folder = mApi.moveFolder((CFolder) params[0], (CFolder) params[1]);
-                showToast("Folder " + folder.getName() + " moved to " + ((CFolder) params[1]).getName());
+                mMessage = "Folder " + folder.getName() + " moved to " + ((CFolder) params[1]).getName();
             } catch (RequestFailException e) {
                 e.printStackTrace();
-                showToast(e.getMessage());
+                mMessage = e.getMessage();
             }
-
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            showToast(mMessage);
         }
     }
 

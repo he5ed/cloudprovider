@@ -529,9 +529,8 @@ public class BoxApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                // new file created
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                return buildFolder(jsonObject);
+                // return folder object
+                return buildFolder(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -578,7 +577,7 @@ public class BoxApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful() && response.code() == 201) {
-                // new folder created
+                // return folder object
                 return buildFolder(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
@@ -740,9 +739,8 @@ public class BoxApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                // new file created
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                return buildFile(jsonObject);
+                // return file object
+                return buildFile(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -824,20 +822,19 @@ public class BoxApi extends BaseApi {
      */
     private File downloadFile(@NonNull Request request, @NonNull String filename) throws RequestFailException {
         try {
-            File file = new File(CloudProvider.CACHE_DIR, filename);
-
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 if (FilesUtils.getInternalAvailableBytes() < response.body().contentLength()) {
                     // insufficient storage space throw exception
                     throw new RequestFailException("Insufficient storage");
                 } else {
+                    File file = new File(CloudProvider.CACHE_DIR, filename);
                     FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(file));
+                    return file;
                 }
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
-            return file;
         } catch (IOException e) {
             throw new RequestFailException(e.getMessage());
         }
@@ -877,7 +874,7 @@ public class BoxApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                // new file created
+                // return file object
                 JSONObject jsonObject = new JSONObject(response.body().string());
                 JSONArray entries = jsonObject.getJSONArray("entries");
                 return buildFile(entries.getJSONObject(0));
@@ -914,7 +911,7 @@ public class BoxApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                // new file created
+                // return file object
                 JSONObject jsonObject = new JSONObject(response.body().string());
                 JSONArray entries = jsonObject.getJSONArray("entries");
                 return buildFile(entries.getJSONObject(0));
@@ -1114,7 +1111,7 @@ public class BoxApi extends BaseApi {
      * @return  list of files and folders that match search criteria
      * @throws RequestFailException
      */
-    public synchronized List<Object> search(@NonNull Map<String, Object> params, CFolder parent) throws RequestFailException {
+    private synchronized List<Object> search(@NonNull Map<String, Object> params, CFolder parent) throws RequestFailException {
         List<Object> list = new ArrayList<>();
 
         Uri uri = Uri.parse(API_BASE_URL);
@@ -1237,6 +1234,7 @@ public class BoxApi extends BaseApi {
                     return;
                 }
 
+                // return folder object
                 try {
                     CFolder folder = buildFolder(new JSONObject(response.body().string()));
                     // create folder and send to callback
@@ -1317,9 +1315,6 @@ public class BoxApi extends BaseApi {
                 } catch (JSONException e) {
                     // send exception to callback
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                } catch (RequestFailException e) {
-                    // send exception to callback
-                    callback.onRequestFailure(request, e);
                 }
             }
         });
@@ -1920,8 +1915,7 @@ public class BoxApi extends BaseApi {
      * @param request for redirect
      * @param callback to return the request result back
      */
-    private void downloadFileAsync(@NonNull final Request request, @NonNull String filename, final ApiCallback callback) {
-        final File file = new File(CloudProvider.CACHE_DIR, filename);
+    private void downloadFileAsync(@NonNull final Request request, @NonNull final String filename, final ApiCallback callback) {
 
         mHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -1943,6 +1937,7 @@ public class BoxApi extends BaseApi {
                     // insufficient storage space throw exception
                     callback.onRequestFailure(request, new RequestFailException("Insufficient storage"));
                 } else {
+                    File file = new File(CloudProvider.CACHE_DIR, filename);
                     FilesUtils.copyFile(response.body().byteStream(), new FileOutputStream(file));
                     callback.onReceiveItems(request, Arrays.asList(file));
                 }
@@ -2034,7 +2029,7 @@ public class BoxApi extends BaseApi {
      * @param parent folder wto search for
      * @param callback to return the request result back
      */
-    public synchronized void searchAsync(@NonNull final Map<String, Object> params,
+    private synchronized void searchAsync(@NonNull final Map<String, Object> params,
                                          final CFolder parent, final ApiCallback callback) {
         final ArrayList<Parcelable> list = new ArrayList<>();
 
@@ -2096,8 +2091,6 @@ public class BoxApi extends BaseApi {
                     }
                 } catch (JSONException e) {
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
-                } catch (RequestFailException e) {
-                    callback.onRequestFailure(request, e);
                 }
             }
         });
@@ -2166,36 +2159,31 @@ public class BoxApi extends BaseApi {
      * @param jsonArray that contain files and folders information
      * @param parent folder that contain the items returned
      * @return list that contains CFile and CFolder that belong to the parent folder
-     * @throws RequestFailException
+     * @throws JSONException
      */
-    private synchronized List createFilteredItemsList(JSONArray jsonArray, CFolder parent) throws RequestFailException {
+    private synchronized List createFilteredItemsList(JSONArray jsonArray, CFolder parent) throws JSONException {
         if (jsonArray == null || jsonArray.length() == 0) return null;
 
         List<Object> list = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                // filter parent
-                if (parent != null && jsonObject.has("parent") &&
-                        !jsonObject.getJSONObject("parent").getString("id").equals(parent.getId()))
-                    continue;
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            // filter parent
+            if (parent != null && jsonObject.has("parent") &&
+                    !jsonObject.getJSONObject("parent").getString("id").equals(parent.getId()))
+                continue;
 
-                String type = jsonObject.getString("type");
-                switch (type) {
-                    case "file":
-                        list.add(buildFile(jsonObject));
-                        break;
-                    case "folder":
-                        list.add(buildFolder(jsonObject));
-                        break;
-                    default:
-                        Log.e(TAG, "Unknown type found");
-                        break;
-                }
-
-            } catch (JSONException e) {
-                throw new RequestFailException(e.getMessage());
+            String type = jsonObject.getString("type");
+            switch (type) {
+                case "file":
+                    list.add(buildFile(jsonObject));
+                    break;
+                case "folder":
+                    list.add(buildFolder(jsonObject));
+                    break;
+                default:
+                    Log.e(TAG, "Unknown type found");
+                    break;
             }
         }
 

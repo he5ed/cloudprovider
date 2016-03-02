@@ -590,8 +590,8 @@ public class CloudDriveApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                return buildFolder(jsonObject);
+                // return folder object
+                return buildFolder(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -647,8 +647,8 @@ public class CloudDriveApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                return buildFolder(jsonObject);
+                // return folder object
+                return buildFolder(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -844,8 +844,8 @@ public class CloudDriveApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                return buildFile(jsonObject);
+                // return file object
+                return buildFile(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -898,8 +898,8 @@ public class CloudDriveApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                return buildFile(jsonObject);
+                // return file object
+                return buildFile(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -939,8 +939,8 @@ public class CloudDriveApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                JSONObject jsonObject = new JSONObject(response.body().string());
-                return buildFile(jsonObject);
+                // return file object
+                return buildFile(new JSONObject(response.body().string()));
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -1417,8 +1417,6 @@ public class CloudDriveApi extends BaseApi {
                     } else {
                         callback.onReceiveItems(request, list);
                     }
-                } catch (RequestFailException e) {
-                    callback.onRequestFailure(request, e);
                 } catch (JSONException e) {
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 }
@@ -1427,12 +1425,13 @@ public class CloudDriveApi extends BaseApi {
     }
 
     /**
-     * Get continue folder items
+     * Async get continue folder items
      *
      * @param folderId of the folder to explore
      * @param startToken nextToken from previous request for access more content
+     * @param callback to return the request result back
      */
-    public synchronized void exploreFolderContinueAsync(final String folderId, String startToken, final ApiCallback callback) {
+    private synchronized void exploreFolderContinueAsync(final String folderId, String startToken, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
             return;
@@ -1493,8 +1492,6 @@ public class CloudDriveApi extends BaseApi {
                     } else {
                         callback.onReceiveItems(request, list);
                     }
-                } catch (RequestFailException e) {
-                    callback.onRequestFailure(request, e);
                 } catch (JSONException e) {
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 }
@@ -1533,8 +1530,6 @@ public class CloudDriveApi extends BaseApi {
                     } else {
                         callback.onReceiveItems(request, list);
                     }
-                } catch (RequestFailException e) {
-                    callback.onRequestFailure(request, e);
                 } catch (JSONException e) {
                     callback.onRequestFailure(request, new RequestFailException(e.getMessage()));
                 }
@@ -2416,32 +2411,26 @@ public class CloudDriveApi extends BaseApi {
      *
      * @param jsonArray that contain files and folders information
      * @return list that contains CFile and CFolder
-     * @throws RequestFailException
+     * @throws JSONException
      */
-    private List createItemList(JSONArray jsonArray) throws RequestFailException {
+    private List createItemList(JSONArray jsonArray) throws JSONException {
         if (jsonArray == null || jsonArray.length() == 0) return null;
 
         List<Object> list = new ArrayList<>();
 
         for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String type = jsonObject.getString("kind");
-                switch (type.toLowerCase()) {
-                    case "file":
-                        list.add(buildFile(jsonObject));
-                        break;
-                    case "folder":
-                        list.add(buildFolder(jsonObject));
-                        break;
-                    default:
-                        Log.e(TAG, "Unknown type found");
-                        break;
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-                throw new RequestFailException(e.getMessage());
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
+            String type = jsonObject.getString("kind");
+            switch (type.toLowerCase()) {
+                case "file":
+                    list.add(buildFile(jsonObject));
+                    break;
+                case "folder":
+                    list.add(buildFolder(jsonObject));
+                    break;
+                default:
+                    Log.e(TAG, "Unknown type found");
+                    break;
             }
         }
 
