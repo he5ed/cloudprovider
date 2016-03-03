@@ -771,13 +771,11 @@ public class BoxApi extends BaseApi {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 switch (response.code()) {
-                    case 200:
-                        // redirect to url
-                        return downloadFile(response.request(), filename);
                     case 202:
                         // retry after due to file just uploaded
                         delayDownloadFile(file, filename);
                         break;
+                    case 200:
                     case 302:
                         // redirect to url
                         return downloadFile(response.request(), filename);
@@ -1183,13 +1181,11 @@ public class BoxApi extends BaseApi {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 switch (response.code()) {
-                    case 200:
-                        // redirect to url
-                        return downloadFile(response.request(), file.getId() + ".png");
                     case 202:
                         // retry after due to file just uploaded
                         delayDownloadFile(file, file.getId() + ".png");
                         break;
+                    case 200:
                     case 302:
                         // redirect to url
                         return downloadFile(response.request(), file.getId() + ".png");
@@ -1209,8 +1205,6 @@ public class BoxApi extends BaseApi {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
             return;
         }
-
-        if (TextUtils.isEmpty(folderId)) return;
 
         final Request request = new Request.Builder()
                 .url(API_BASE_URL + "/folders/" + folderId)
@@ -1871,14 +1865,11 @@ public class BoxApi extends BaseApi {
                 // determine type of download process
                 String finalFilename = TextUtils.isEmpty(filename) ? file.getName() : filename;
                 switch (response.code()) {
-                    case 200:
-                        // redirect to url
-                        downloadFileAsync(response.request(), finalFilename, callback);
-                        break;
                     case 202:
                         // retry after due to file just uploaded
                         delayDownloadFileAsync(file, finalFilename, callback);
                         break;
+                    case 200:
                     case 302:
                         // redirect to url
                         downloadFileAsync(response.request(), finalFilename, callback);
@@ -1913,6 +1904,7 @@ public class BoxApi extends BaseApi {
      * Async download file from redirect request
      *
      * @param request for redirect
+     * @param filename for downloaded file
      * @param callback to return the request result back
      */
     private void downloadFileAsync(@NonNull final Request request, @NonNull final String filename, final ApiCallback callback) {
@@ -2136,14 +2128,11 @@ public class BoxApi extends BaseApi {
 
                 // determine type of download
                 switch (response.code()) {
-                    case 200:
-                        // redirect to url
-                        downloadFileAsync(response.request(), file.getId() + ".png", callback);
-                        break;
                     case 202:
                         // retry after due to file just uploaded
                         delayDownloadFileAsync(file, file.getId() + ".png", callback);
                         break;
+                    case 200:
                     case 302:
                         // redirect to url
                         downloadFileAsync(response.request(), file.getId() + ".png", callback);
