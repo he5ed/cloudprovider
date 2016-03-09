@@ -100,11 +100,10 @@ public abstract class BaseApi {
 
     /**
      *  Async get file information from id
-     *
-     * @param folderId to retrieve the folder details
+     *  @param folderId to retrieve the folder details
      * @param callback to return the request result back
      */
-    public abstract void getFolderInfoAsync(@NonNull String folderId, IApiCallback callback);
+    public abstract void getFolderInfoAsync(@NonNull String folderId, ApiCallback callback);
 
     /**
      * Async get folder items

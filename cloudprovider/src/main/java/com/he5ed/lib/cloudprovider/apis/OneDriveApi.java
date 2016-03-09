@@ -1189,7 +1189,7 @@ public class OneDriveApi extends BaseApi {
     }
 
     @Override
-    public void getFolderInfoAsync(@NonNull String folderId, final IApiCallback callback) {
+    public void getFolderInfoAsync(@NonNull String folderId, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
             return;
