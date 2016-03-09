@@ -35,6 +35,7 @@ import com.he5ed.lib.cloudprovider.apis.BoxApi;
 import com.he5ed.lib.cloudprovider.apis.CloudDriveApi;
 import com.he5ed.lib.cloudprovider.apis.DropboxApi;
 import com.he5ed.lib.cloudprovider.apis.OneDriveApi;
+import com.he5ed.lib.cloudprovider.apis.YandexApi;
 import com.he5ed.lib.cloudprovider.auth.Authenticator;
 import com.he5ed.lib.cloudprovider.models.CloudAccount;
 import com.he5ed.lib.cloudprovider.models.User;
@@ -159,6 +160,10 @@ public class CloudProvider {
             addApi(CloudDriveApi.class);
         }
 
+        if (YandexApi.CLIENT_ID != null && YandexApi.CLIENT_SECRET != null) {
+            YandexApi.ENABLE_API = true;
+            addApi(YandexApi.class);
+        }
     }
 
     /**

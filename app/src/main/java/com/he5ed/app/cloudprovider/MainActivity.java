@@ -21,6 +21,7 @@ import com.he5ed.lib.cloudprovider.apis.BoxApi;
 import com.he5ed.lib.cloudprovider.apis.CloudDriveApi;
 import com.he5ed.lib.cloudprovider.apis.DropboxApi;
 import com.he5ed.lib.cloudprovider.apis.OneDriveApi;
+import com.he5ed.lib.cloudprovider.apis.YandexApi;
 import com.he5ed.lib.cloudprovider.auth.AddAccountDialogFragment;
 import com.he5ed.lib.cloudprovider.models.CFile;
 import com.he5ed.lib.cloudprovider.models.CFolder;
@@ -144,6 +145,10 @@ public class MainActivity extends AppCompatActivity
         CloudDriveApi.CLIENT_ID = BuildConfig.CLOUDDRIVE_CLIENT_ID;
         CloudDriveApi.CLIENT_SECRET = BuildConfig.CLOUDDRIVE_CLIENT_SECRET;
         CloudDriveApi.REDIRECT_URL = BuildConfig.CLOUDDRIVE_REDIRECT_URL;
+
+        YandexApi.CLIENT_ID = BuildConfig.YANDEX_CLIENT_ID;
+        YandexApi.CLIENT_SECRET = BuildConfig.YANDEX_CLIENT_SECRET;
+        YandexApi.REDIRECT_URL = BuildConfig.YANDEX_REDIRECT_URL;
     }
 
     private void addAccount() {

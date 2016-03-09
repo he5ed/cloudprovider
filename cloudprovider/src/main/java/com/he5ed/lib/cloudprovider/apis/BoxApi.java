@@ -518,8 +518,6 @@ public class BoxApi extends BaseApi {
             throw new RequestFailException("Access token not available");
         }
 
-        if (TextUtils.isEmpty(folderId)) return null;
-
         Request request = new Request.Builder()
                 .url(API_BASE_URL + "/folders/" + folderId)
                 .header("Authorization", String.format("Bearer %s", mAccessToken))
@@ -713,7 +711,7 @@ public class BoxApi extends BaseApi {
         try {
             Response response = mHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
-                Log.d(TAG, "CFolder with the id: " + folderId + " deleted");
+                Log.d(TAG, "Folder with the id: " + folderId + " deleted");
             } else {
                 throw new RequestFailException(response.message(), response.code());
             }
@@ -1200,7 +1198,7 @@ public class BoxApi extends BaseApi {
     }
 
     @Override
-    public void getFolderInfoAsync(@NonNull String folderId, final IApiCallback callback) {
+    public void getFolderInfoAsync(@NonNull String folderId, final ApiCallback callback) {
         if (TextUtils.isEmpty(mAccessToken)) {
             callback.onRequestFailure(null, new RequestFailException("Access token not available"));
             return;

@@ -41,6 +41,13 @@ android {
                 "\"" + properties.getProperty('clouddrive.client.secret') + "\"" : "null")
         buildConfigField "String", "CLOUDDRIVE_REDIRECT_URL", (properties.containsKey('clouddrive.redirect') ?
                 "\"" + properties.getProperty('clouddrive.redirect') + "\"" : "null")
+        // YandexApi configuration
+        buildConfigField "String", "YANDEX_CLIENT_ID", (properties.containsKey('yandex.client.id') ?
+                "\"" + properties.getProperty('yandex.client.id') + "\"" : "null")
+        buildConfigField "String", "YANDEX_CLIENT_SECRET", (properties.containsKey('yandex.client.secret') ?
+                "\"" + properties.getProperty('yandex.client.secret') + "\"" : "null")
+        buildConfigField "String", "YANDEX_REDIRECT_URL", (properties.containsKey('yandex.redirect') ?
+                "\"" + properties.getProperty('yandex.redirect') + "\"" : "null")
         // MediaFireApi configuration
         buildConfigField "String", "MEDIAFIRE_CLIENT_ID", (properties.containsKey('mediafire.client.id') ?
                 "\"" + properties.getProperty('mediafire.client.id') + "\"" : "null")
