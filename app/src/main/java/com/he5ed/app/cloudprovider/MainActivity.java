@@ -17,6 +17,7 @@ import android.widget.LinearLayout;
 import com.he5ed.app.cloudprovider.ui.adapters.AccountAdapter;
 import com.he5ed.app.cloudprovider.ui.widgets.RecyclerListView;
 import com.he5ed.lib.cloudprovider.CloudProvider;
+import com.he5ed.lib.cloudprovider.apis.BitcasaApi;
 import com.he5ed.lib.cloudprovider.apis.BoxApi;
 import com.he5ed.lib.cloudprovider.apis.CloudDriveApi;
 import com.he5ed.lib.cloudprovider.apis.DropboxApi;
@@ -144,6 +145,10 @@ public class MainActivity extends AppCompatActivity
         CloudDriveApi.CLIENT_ID = BuildConfig.CLOUDDRIVE_CLIENT_ID;
         CloudDriveApi.CLIENT_SECRET = BuildConfig.CLOUDDRIVE_CLIENT_SECRET;
         CloudDriveApi.REDIRECT_URL = BuildConfig.CLOUDDRIVE_REDIRECT_URL;
+
+        BitcasaApi.CLIENT_ID = BuildConfig.CLOUDDRIVE_CLIENT_ID;
+        BitcasaApi.CLIENT_SECRET = BuildConfig.CLOUDDRIVE_CLIENT_SECRET;
+        BitcasaApi.REDIRECT_URL = BuildConfig.CLOUDDRIVE_REDIRECT_URL;
     }
 
     private void addAccount() {

@@ -30,6 +30,7 @@ public class OAuth2Activity extends AccountAuthenticatorActivity {
     public static final String EXTRA_ACCOUNT_TYPE = "com.he5ed.lib.cloudprovider.ACCOUNT_TYPE";
     public static final String EXTRA_CLOUD_API = "com.he5ed.lib.cloudprovider.CLOUD_API";
     public static final String EXTRA_AUTH_TYPE = "com.he5ed.lib.cloudprovider.AUTH_TYPE";
+    public static final String EXTRA_NATIVE_UI = "com.he5ed.lib.cloudprovider.AUTH_NATIVE_UI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

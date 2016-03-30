@@ -48,6 +48,13 @@ android {
                 "\"" + properties.getProperty('mediafire.client.secret') + "\"" : "null")
         buildConfigField "String", "MEDIAFIRE_REDIRECT_URL", (properties.containsKey('mediafire.redirect') ?
                 "\"" + properties.getProperty('mediafire.redirect') + "\"" : "null")
+        // BitcasaApi configuration
+        buildConfigField "String", "BITCASA_CLIENT_ID", (properties.containsKey('bitcasa.client.id') ?
+                "\"" + properties.getProperty('mediafire.client.id') + "\"" : "null")
+        buildConfigField "String", "BITCASA_CLIENT_SECRET", (properties.containsKey('bitcasa.client.secret') ?
+                "\"" + properties.getProperty('mediafire.client.secret') + "\"" : "null")
+        buildConfigField "String", "BITCASA_REDIRECT_URL", (properties.containsKey('bitcasa.redirect') ?
+                "\"" + properties.getProperty('mediafire.redirect') + "\"" : "null")
     }
     buildTypes {
         release {

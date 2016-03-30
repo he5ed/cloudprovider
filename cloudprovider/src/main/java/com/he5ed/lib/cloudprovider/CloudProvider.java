@@ -31,6 +31,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.he5ed.lib.cloudprovider.apis.BaseApi;
+import com.he5ed.lib.cloudprovider.apis.BitcasaApi;
 import com.he5ed.lib.cloudprovider.apis.BoxApi;
 import com.he5ed.lib.cloudprovider.apis.CloudDriveApi;
 import com.he5ed.lib.cloudprovider.apis.DropboxApi;
@@ -157,6 +158,11 @@ public class CloudProvider {
         if (CloudDriveApi.CLIENT_ID != null && CloudDriveApi.CLIENT_SECRET != null) {
             CloudDriveApi.ENABLE_API = true;
             addApi(CloudDriveApi.class);
+        }
+
+        if (BitcasaApi.CLIENT_ID != null && BitcasaApi.CLIENT_SECRET != null) {
+            BitcasaApi.ENABLE_API = true;
+            addApi(BitcasaApi.class);
         }
 
     }

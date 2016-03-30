@@ -233,5 +233,28 @@ public class AuthHelper {
         return null;
     }
 
+    /**
+     * Create OkHttp request to send user login form
+     *
+     * @param cloudApi type of cloud account
+     * @return Request
+     */
+    public static Request getUserLoginRequest(String cloudApi, String[] inputs) {
+        // use reflection for flexibility
+        try {
+            Class<?> clazz = Class.forName(cloudApi);
+            Method getUserLoginRequest = clazz.getMethod("getUserLoginRequest", String[].class);
+            return (Request) getUserLoginRequest.invoke(null, (Object) inputs);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
 
+        return null;
+    }
 }

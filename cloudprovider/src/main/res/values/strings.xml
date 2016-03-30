@@ -3,6 +3,9 @@
 
     <!-- OAuth2Activity -->
     <string name="dialog_message_auth_error">Authorization fail!</string>
+    <string name="button_login">Login</string>
+    <string name="text_username">Username</string>
+    <string name="text_password">Password</string>
     <string name="auth_error_access_token_fail">Fail to get access token!</string>
     <string name="auth_error_malformed_url">No url or malformed url for request!</string>
     <string name="auth_error_user_info_fail">Fail to get user information!</string>
